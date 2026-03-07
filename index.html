@@ -81,11 +81,11 @@
                     </h1>
                     <p class="text-lg text-slate-300 mb-8 leading-relaxed max-w-2xl">
                         会社のパンフレットだけでは、あなたの熱量は伝わりません。<br>
-                        一生維持費がかからない「空の箱」に、仕事への情熱だけを詰め込んで持ち歩きませんか？
+                        一生インフラ維持費がかからない「空の箱」に、仕事への情熱だけを詰め込んで持ち歩きませんか？
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
                         <a href="#pricing" class="bg-brand-teal hover:bg-teal-400 text-brand-navy font-bold py-3.5 px-10 rounded-md text-center transition-all shadow-lg">
-                            維持費0円の仕組み
+                            料金・サポート体制を見る
                         </a>
                         <a href="#contact" class="bg-transparent border border-slate-500 hover:border-white text-white font-medium py-3.5 px-10 rounded-md text-center transition-all">
                             まずは想いを聞かせてください
@@ -114,15 +114,12 @@
                     </span>
                 </div>
                 
-                <!-- ▼ ここにJavaScriptでスプレッドシートのデータが自動挿入されます ▼ -->
                 <div id="news-container" class="space-y-1">
-                    <!-- 初期状態はローディング表示 -->
                     <div class="text-center py-12 text-slate-400 text-sm flex flex-col items-center">
                         <i class="fa-solid fa-circle-notch fa-spin text-3xl text-brand-teal/50 mb-4"></i>
                         <span>お知らせを読み込んでいます...</span>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -218,46 +215,79 @@
 
         <!-- Pricing Section -->
         <section id="pricing" class="py-24 bg-slate-50">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-brand-navy mb-4 text-center">一生続く維持費を「ゼロ」に</h2>
+                    <h2 class="text-3xl font-bold text-brand-navy mb-4 text-center">透明でシンプルな料金体系</h2>
                     <div class="w-16 h-1 bg-brand-teal mx-auto mb-6"></div>
-                    <p class="text-slate-600 text-center">保守費用で儲けるモデルではありません。あなたの想いを形にする「一度きり」の制作費のみ。</p>
+                    <p class="text-slate-600 text-center">サーバー代は無料。あとはあなたに必要な「サポート」を選ぶだけです。</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto text-left">
-                    <!-- 維持費 -->
-                    <div class="md:col-span-2 bg-white rounded-2xl p-10 border-2 border-brand-teal shadow-xl relative overflow-hidden transform md:-translate-y-4">
-                        <div class="absolute top-0 right-0 bg-brand-teal text-brand-navy font-bold px-6 py-2 rounded-bl-xl text-xs uppercase tracking-widest">
-                            Maintenance Free
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto text-left items-stretch">
+                    <!-- インフラ費 -->
+                    <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-md flex flex-col relative">
+                        <div class="absolute top-0 right-0 bg-slate-100 text-slate-500 font-bold px-4 py-1.5 rounded-bl-xl text-[10px] uppercase tracking-widest">
+                            Infrastructure
                         </div>
-                        <h3 class="text-xl font-bold text-brand-navy mb-1">HP維持・管理費</h3>
-                        <p class="text-slate-400 text-xs mb-8">サイトを公開し続けるための固定費</p>
-                        
-                        <div class="flex items-baseline mb-8 justify-start">
-                            <span class="text-7xl font-extrabold text-brand-navy">¥0</span>
-                            <span class="text-xl text-slate-500 ml-4 font-bold">/ 月額（完全無料）</span>
+                        <h3 class="text-lg font-bold text-brand-navy mb-1">サーバー・ドメイン代</h3>
+                        <p class="text-slate-500 text-xs mb-6">サイトを置くための場所代</p>
+                        <div class="flex items-baseline mb-6">
+                            <span class="text-5xl font-extrabold text-brand-navy">¥0</span>
+                            <span class="text-sm text-slate-500 ml-2 font-bold">/ 永年無料</span>
                         </div>
-                        
-                        <ul class="text-base text-slate-600 space-y-4 mb-4">
-                            <li class="flex items-center"><i class="fa-solid fa-check text-brand-teal mr-3"></i> サーバー代・ドメイン更新料 0円</li>
-                            <li class="flex items-center"><i class="fa-solid fa-check text-brand-teal mr-3"></i> 解約金・違約金・縛り 一切なし</li>
-                        </ul>
+                        <p class="text-xs text-slate-500 leading-relaxed mt-auto">
+                            Googleの無料インフラを活用するため、一般的な制作会社で毎月かかる固定費は一生不要です。
+                        </p>
                     </div>
 
-                    <!-- 修正費 -->
-                    <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-md flex flex-col justify-center">
-                        <h3 class="text-lg font-bold text-brand-navy mb-2">スポット修正</h3>
-                        <p class="text-slate-500 text-xs mb-6">「肩書きを変えたい」「写真を差し替えたい」場合に</p>
-                        
-                        <div class="flex items-baseline mb-6">
-                            <span class="text-3xl font-bold text-brand-navy">¥500</span>
-                            <span class="text-sm text-slate-500 ml-2">/ 1回</span>
+                    <!-- 保守サポート（月額500円） -->
+                    <div class="bg-white rounded-2xl p-8 border-2 border-brand-teal shadow-xl flex flex-col relative transform md:-translate-y-4">
+                        <div class="absolute top-0 right-0 bg-brand-teal text-brand-navy font-bold px-4 py-1.5 rounded-bl-xl text-xs uppercase tracking-widest">
+                            Recommended
                         </div>
-                        
-                        <p class="text-xs text-slate-500 leading-relaxed text-left">
-                            必要な時にワンコインで。高額な保守契約を結ばなくても、あなたの変化に寄り添います。
+                        <h3 class="text-xl font-bold text-brand-navy mb-1">保守サポート（伴走）</h3>
+                        <p class="text-slate-500 text-xs mb-6">定期的な更新や、ITのちょっとした相談に</p>
+                        <div class="flex items-baseline mb-6">
+                            <span class="text-5xl font-extrabold text-brand-navy">¥500</span>
+                            <span class="text-sm text-slate-500 ml-2 font-bold">/ 月</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-3 mb-6 flex-grow">
+                            <li class="flex items-start"><i class="fa-solid fa-check text-brand-teal mr-2 mt-0.5"></i> 月1回までのテキスト・画像変更</li>
+                            <li class="flex items-start"><i class="fa-solid fa-check text-brand-teal mr-2 mt-0.5"></i> スプレッドシート操作のサポート</li>
+                            <li class="flex items-start"><i class="fa-solid fa-check text-brand-teal mr-2 mt-0.5"></i> いつでも解約可能（縛りなし）</li>
+                        </ul>
+                        <div class="pt-4 border-t border-slate-100 mt-auto">
+                            <p class="text-xs text-brand-navy font-bold leading-relaxed">
+                                ITが苦手な方でも安心。ワンコインで頼れる専門家がつく「お守り」プランです。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- スポット修正（1回3000円） -->
+                    <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-md flex flex-col relative">
+                        <div class="absolute top-0 right-0 bg-slate-100 text-slate-500 font-bold px-4 py-1.5 rounded-bl-xl text-[10px] uppercase tracking-widest">
+                            One-time
+                        </div>
+                        <h3 class="text-lg font-bold text-brand-navy mb-1">スポット修正</h3>
+                        <p class="text-slate-500 text-xs mb-6">保守サポート未加入時の単発依頼</p>
+                        <div class="flex items-baseline mb-6">
+                            <span class="text-4xl font-extrabold text-brand-navy">¥3,000</span>
+                            <span class="text-sm text-slate-500 ml-2 font-bold">/ 1回</span>
+                        </div>
+                        <p class="text-xs text-slate-500 leading-relaxed mt-auto font-bold text-brand-navy">
+                            ※修正頻度が高い場合は、月額500円の「保守サポート」へのご加入が圧倒的にお得になります。
                         </p>
+                    </div>
+
+                    <!-- 初期制作費：上限5000円への修正 -->
+                    <div class="md:col-span-3 bg-slate-100 rounded-2xl p-8 border border-slate-200 flex flex-col md:flex-row items-center justify-between mt-4">
+                        <div>
+                            <h3 class="font-bold text-brand-navy text-xl mb-2"><i class="fa-solid fa-wand-magic-sparkles text-brand-teal mr-2"></i> 初期制作費（ヒアリング・構築）</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">あなたの想いの言語化から、Web上での形作り、Googleツール連携までの初期セットアップ費用です。</p>
+                        </div>
+                        <div class="mt-6 md:mt-0 text-right">
+                            <div class="text-3xl font-extrabold text-brand-navy">¥1,000 〜 ¥5,000</div>
+                            <p class="text-xs text-slate-500 mt-1 font-bold">※簡単な構成であれば1,000円で作成いたします。</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -278,29 +308,32 @@
         <!-- Profile Section -->
         <section id="profile" class="py-24 bg-white">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-brand-navy rounded-[40px] overflow-hidden shadow-2xl flex flex-col md:flex-row profile-shadow border border-white/10">
-                    <!-- 代表プロフィール写真 -->
-                    <div class="md:w-5/12 relative min-h-[400px] bg-slate-800 overflow-hidden">
+                <!-- md:items-center で写真を垂直方向の真ん中に配置 -->
+                <div class="bg-brand-navy rounded-[40px] shadow-2xl flex flex-col md:flex-row profile-shadow border border-white/10 p-10 md:p-16 gap-10 md:gap-16 items-center md:items-center overflow-hidden relative">
+                    
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-brand-teal opacity-[0.03] rounded-full -mr-32 -mt-32"></div>
+
+                    <!-- 代表プロフィール写真 (垂直方向の真ん中に) -->
+                    <div class="w-48 h-48 md:w-56 md:h-56 flex-shrink-0 relative">
                         <img src="profile.jpg" 
                              alt="阪本貴史 プロフィール" 
-                             style="display: block; width: 100%; height: 100%; object-fit: cover;"
-                             class="absolute inset-0 z-10"
+                             class="w-full h-full object-cover rounded-full border-4 border-brand-teal/30 shadow-[0_0_40px_rgba(45,212,191,0.15)] relative z-10"
                              onerror="this.style.display='none'; document.getElementById('preview-fallback').style.display='flex';">
-                        <div id="preview-fallback" class="absolute inset-0 z-0 hidden flex-col items-center justify-center bg-slate-800 text-brand-teal p-8 text-center border-r border-slate-700">
-                            <i class="fa-solid fa-image-portrait text-6xl mb-4 opacity-70"></i>
-                            <span class="text-sm font-bold tracking-wide">本番環境では、ここに<br>阪本様の写真が表示されます。</span>
-                            <span class="text-xs text-slate-400 mt-4 leading-relaxed">※現在のプレビュー画面ではセキュリティ上<br>直接画像を読み込めない仕様のため、<br>この案内枠を表示しています。</span>
+                        <div id="preview-fallback" class="hidden absolute inset-0 flex-col items-center justify-center bg-slate-800 text-brand-teal rounded-full border-4 border-brand-teal/30 shadow-inner z-10">
+                            <i class="fa-solid fa-user-tie text-5xl mb-2 opacity-70"></i>
+                            <span class="text-[10px] font-bold tracking-wide text-center leading-tight">画像<br>準備中</span>
                         </div>
                     </div>
 
-                    <div class="md:w-7/12 p-10 md:p-16 text-white flex flex-col justify-center text-left relative z-20 bg-brand-navy">
-                        <div class="inline-block px-4 py-1 bg-brand-teal text-brand-navy text-xs font-bold rounded-full mb-6 w-fit uppercase tracking-wider">
+                    <!-- プロフィールテキスト -->
+                    <div class="flex-grow text-white flex flex-col justify-center text-center md:text-left relative z-20">
+                        <div class="inline-block px-4 py-1 bg-brand-teal text-brand-navy text-xs font-bold rounded-full mb-6 w-fit mx-auto md:mx-0 uppercase tracking-wider">
                             Founder / Partner
                         </div>
-                        <h2 class="text-4xl font-bold mb-3">阪本 貴史 <span class="text-lg font-normal text-slate-400 ml-2">Takafumi Sakamoto</span></h2>
-                        <p class="text-brand-teal font-medium mb-8 italic text-lg border-l-2 border-brand-teal pl-4">民間医療法人 経営企画部にて勤務</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-3">阪本 貴史 <span class="text-lg font-normal text-slate-400 ml-2 block md:inline mt-1 md:mt-0 font-sans tracking-normal">Takafumi Sakamoto</span></h2>
+                        <p class="text-brand-teal font-medium mb-8 italic text-base md:text-lg md:border-l-2 md:border-brand-teal md:pl-4">民間医療法人 経営企画部にて勤務</p>
                         
-                        <div class="space-y-6 text-slate-300 text-sm md:text-base leading-relaxed">
+                        <div class="space-y-6 text-slate-300 text-sm md:text-base leading-relaxed text-left max-w-2xl">
                             <p>
                                 本業では医療法人の経営企画として、日々複雑な組織の課題と向き合っています。「誰もが思いを持って働いている」——私はそう信じていますが、その熱量が仕組みの壁に阻まれ、伝わっていないケースを数多く見てきました。
                             </p>
@@ -312,14 +345,12 @@
                             </p>
                         </div>
                         
-                        <div class="mt-10 flex flex-wrap gap-4">
-                            <!-- ▼ XのURLを反映しました ▼ -->
-                            <a href="https://x.com/2022AIRBOX" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-brand-teal hover:text-brand-navy text-white rounded-xl transition-all border border-white/20 text-sm font-bold shadow-sm">
-                                <i class="fa-brands fa-x-twitter"></i> X (Twitter)
+                        <div class="mt-10 flex flex-wrap justify-center md:justify-start gap-4">
+                            <a href="https://x.com/2022AIRBOX" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white/10 hover:bg-brand-teal hover:text-brand-navy text-white rounded-xl transition-all border border-white/20 text-sm font-bold shadow-sm group">
+                                <i class="fa-brands fa-x-twitter group-hover:scale-110 transition-transform"></i> X (Twitter)
                             </a>
-                            <!-- ▼ noteのURLを反映しました ▼ -->
-                            <a href="https://note.com/gay_iguana46taka" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-brand-teal hover:text-brand-navy text-white rounded-xl transition-all border border-white/20 text-sm font-bold shadow-sm">
-                                <i class="fa-solid fa-book-open"></i> note
+                            <a href="https://note.com/gay_iguana46taka" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white/10 hover:bg-brand-teal hover:text-brand-navy text-white rounded-xl transition-all border border-white/20 text-sm font-bold shadow-sm group">
+                                <i class="fa-solid fa-book-open group-hover:scale-110 transition-transform"></i> note
                             </a>
                         </div>
                     </div>
@@ -396,20 +427,15 @@
             }
         });
 
-        // ▼ スプレッドシート連動お知らせ取得スクリプト ▼
+        // スプレッドシート連動スクリプト
         document.addEventListener('DOMContentLoaded', () => {
-            // 阪本様から提供されたスプレッドシートのCSV公開URL
             const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_F1Mbeih7N70lLgH1Nd2wnerpvwzkZevMJS81U1wQ5y-KkVo3-i2q2YxrC6HcaoWyxgRVXQAa77w/pub?output=csv';
             const container = document.getElementById('news-container');
 
             fetch(csvUrl)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.text();
-                })
+                .then(response => response.text())
                 .then(csvText => {
                     const rows = parseCSV(csvText);
-                    // 1行目はヘッダー(日付,カテゴリ,内容,URL)と想定し、2行目から抽出。空行は除外
                     const dataRows = rows.slice(1).filter(row => row.length >= 3 && row[0].trim() !== '');
 
                     if (dataRows.length === 0) {
@@ -417,7 +443,7 @@
                         return;
                     }
 
-                    container.innerHTML = ''; // ローディングをクリア
+                    container.innerHTML = '';
 
                     dataRows.forEach(row => {
                         const date = row[0] || '';
@@ -425,13 +451,11 @@
                         const content = row[2] || '';
                         const url = row[3] ? row[3].trim() : '';
 
-                        // カテゴリによる色の出し分け（モダンな淡いトーン＋ボーダー）
-                        let catStyle = 'bg-slate-50 text-slate-600 border border-slate-200'; // Default
+                        let catStyle = 'bg-slate-50 text-slate-600 border border-slate-200';
                         const catLower = category.trim().toLowerCase();
                         if (catLower === 'new') catStyle = 'bg-teal-50 text-teal-700 border border-teal-200';
                         if (catLower.includes('press') || catLower.includes('公式') || catLower.includes('重要')) catStyle = 'bg-blue-50 text-blue-700 border border-blue-200';
                         
-                        // URL（D列）がある場合はリンク付きデザインにする
                         if (url) {
                             const isPdf = url.toLowerCase().endsWith('.pdf');
                             const linkIcon = isPdf ? '<i class="fa-solid fa-file-pdf"></i>' : '<i class="fa-solid fa-arrow-right"></i>';
@@ -458,7 +482,6 @@
                                 </a>
                             `;
                         } else {
-                            // URLがない場合はテキストのみのデザイン
                             container.innerHTML += `
                                 <div class="block py-5 border-b border-slate-100 hover:bg-slate-50/50 transition-colors px-2 md:px-4">
                                     <div class="flex flex-col md:flex-row md:items-start gap-3 md:gap-8">
@@ -478,11 +501,9 @@
                     });
                 })
                 .catch(error => {
-                    console.error('お知らせの取得に失敗しました:', error);
                     container.innerHTML = '<div class="text-center py-8 text-red-400 text-sm border-b border-slate-50">お知らせの読み込みに失敗しました。</div>';
                 });
 
-            // 簡易CSVパーサー関数（カンマや改行を含むデータを正しく処理するため）
             function parseCSV(text) {
                 const rows = [];
                 let row = [];
@@ -501,7 +522,7 @@
                         row.push(currentWord);
                         currentWord = '';
                     } else if ((char === '\n' || char === '\r') && !insideQuotes) {
-                        if (char === '\r' && text[i+1] === '\n') i++; // CRLF対応
+                        if (char === '\r' && text[i+1] === '\n') i++; 
                         row.push(currentWord);
                         rows.push(row);
                         row = [];
