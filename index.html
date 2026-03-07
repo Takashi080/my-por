@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026年度 医療法人DX・患者満足度インタラクティブレポート</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'warm-bg': '#fcfbf9',
+                        'warm-surface': '#f3f0ea',
+                        'warm-border': '#e5e0d8',
+                        'warm-text-main': '#3a352f',
+                        'warm-text-sub': '#6b635a',
+                        'accent-primary': '#4a6b5d',
+                        'accent-secondary': '#d4a373',
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fcfbf9; color: #3a352f; margin: 0; padding: 0; overflow-x: hidden; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 50vh;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 400px; }
+        }
+        .nav-btn.active {
+            background-color: #f3f0ea;
+            border-left: 4px solid #4a6b5d;
+            font-weight: bold;
+            color: #4a6b5d;
+        }
+        .metric-card { transition: all 0.2s ease-in-out; cursor: pointer; }
+        .metric-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-color: #4a6b5d; }
+        .metric-card.active-metric { background-color: #eef2f0; border-color: #4a6b5d; }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen">
+
+<!-- Chosen Palette: Warm Medical Neutrals (Background: #fcfbf9, Surface: #f3f0ea, Primary Accent: #4a6b5d (Teal/Green), Secondary Accent: #d4a373 (Warm Sand)) -->
+<!-- Application Structure Plan: The SPA is structured as a dashboard with a sidebar navigation to facilitate focused exploration of complex data. Instead of a linear report, content is grouped by strategic themes: Executive Overview, Patient Experience, Staff Efficiency, and Web Strategy. This allows users (management) to immediately access the metrics relevant to their specific concerns. The layout uses a fixed sidebar on desktop (bottom bar on mobile) and a dynamic main content area. Interactive metric cards update the central charts, fostering active data exploration rather than passive reading. -->
+<!-- Visualization & Content Choices: 1. Executive KPIs -> Metric Cards -> Quick cognitive processing of health. 2. Patient Satisfaction vs Wait Times -> Dual-axis Line Chart -> Shows inverse correlation clearly. 3. Staff Workload -> Stacked Bar Chart -> Compares time distribution before/after DX implementation. 4. Web Strategy -> Doughnut Chart -> Illustrates traffic source distribution. All charts use Chart.js Canvas rendering. NO SVG or Mermaid used. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <nav class="w-full md:w-64 bg-white border-r border-warm-border flex flex-col justify-between shadow-sm z-10 sticky top-0 md:h-screen">
+        <div>
+            <div class="p-6 border-b border-warm-border">
+                <h1 class="text-xl font-bold text-accent-primary leading-tight">医療法人DX<br>総合レポート</h1>
+                <p class="text-xs text-warm-text-sub mt-2">2026年度実績分析</p>
+            </div>
+            <div class="flex flex-row md:flex-col overflow-x-auto md:overflow-visible p-2 md:p-4 gap-2" id="nav-container">
+                <button onclick="app.switchView('overview')" id="nav-overview" class="nav-btn active flex items-center w-full text-left px-4 py-3 rounded text-sm whitespace-nowrap md:whitespace-normal transition-colors text-warm-text-main hover:bg-warm-surface">
+                    <span class="mr-2 text-lg">&#128200;</span> 経営サマリー
+                </button>
+                <button onclick="app.switchView('patient')" id="nav-patient" class="nav-btn flex items-center w-full text-left px-4 py-3 rounded text-sm whitespace-nowrap md:whitespace-normal transition-colors text-warm-text-main hover:bg-warm-surface">
+                    <span class="mr-2 text-lg">&#127973;</span> 患者満足度分析
+                </button>
+                <button onclick="app.switchView('staff')" id="nav-staff" class="nav-btn flex items-center w-full text-left px-4 py-3 rounded text-sm whitespace-nowrap md:whitespace-normal transition-colors text-warm-text-main hover:bg-warm-surface">
+                    <span class="mr-2 text-lg">&#128101;</span> 現場負荷軽減
+                </button>
+                <button onclick="app.switchView('web')" id="nav-web" class="nav-btn flex items-center w-full text-left px-4 py-3 rounded text-sm whitespace-nowrap md:whitespace-normal transition-colors text-warm-text-main hover:bg-warm-surface">
+                    <span class="mr-2 text-lg">&#128187;</span> Web集客戦略
+                </button>
+            </div>
+        </div>
+        <div class="p-4 hidden md:block text-xs text-warm-text-sub border-t border-warm-border">
+            経営企画室 作成<br>Confidential
+        </div>
+    </nav>
+
+    <main class="flex-1 p-4 md:p-8 lg:p-12 overflow-y-auto w-full max-w-7xl mx-auto">
+        
+        <div id="view-overview" class="view-section">
+            <header class="mb-8">
+                <h2 class="text-3xl font-bold text-warm-text-main mb-2">経営サマリー：DX投資による統合的成果</h2>
+                <p class="text-warm-text-sub leading-relaxed">
+                    本セクションでは、法人の理念である「質の高い医療の提供」と、それを支える経営基盤の現状を俯瞰します。DX（デジタルトランスフォーメーション）投資が、患者満足度、現場スタッフの労働環境、そして新規集客にどのようなインパクトを与えたかを総括しています。
+                </p>
+            </header>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm">
+                    <div class="text-sm text-warm-text-sub mb-1">総合患者満足度</div>
+                    <div class="text-3xl font-bold text-accent-primary">4.8<span class="text-lg text-warm-text-sub font-normal">/5.0</span></div>
+                    <div class="text-xs text-green-600 mt-2">&#9650; 前年比 +0.4pt</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm">
+                    <div class="text-sm text-warm-text-sub mb-1">平均待合時間</div>
+                    <div class="text-3xl font-bold text-accent-primary">12<span class="text-lg text-warm-text-sub font-normal">分</span></div>
+                    <div class="text-xs text-green-600 mt-2">&#9660; 前年比 -15分 (大幅改善)</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm">
+                    <div class="text-sm text-warm-text-sub mb-1">スタッフ残業時間</div>
+                    <div class="text-3xl font-bold text-accent-primary">8.5<span class="text-lg text-warm-text-sub font-normal">h/月</span></div>
+                    <div class="text-xs text-green-600 mt-2">&#9660; 前年比 -45%</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm">
+                    <div class="text-sm text-warm-text-sub mb-1">新規Web予約率</div>
+                    <div class="text-3xl font-bold text-accent-primary">78<span class="text-lg text-warm-text-sub font-normal">%</span></div>
+                    <div class="text-xs text-green-600 mt-2">&#9650; 前年比 +22%</div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm mb-8">
+                <h3 class="text-lg font-bold mb-4">月次総合パフォーマンス推移</h3>
+                <div class="chart-container">
+                    <canvas id="overviewChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-patient" class="view-section hidden">
+            <header class="mb-8">
+                <h2 class="text-3xl font-bold text-warm-text-main mb-2">患者満足度と待合時間の相関分析</h2>
+                <p class="text-warm-text-sub leading-relaxed">
+                    WEB問診システムおよび自動精算機の導入が、患者様の体験価値にどう寄与したかを分析します。下の指標カードをクリックすることで、グラフ上の特定のデータラインを強調表示し、施策ごとの効果を比較・検証できます。
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="bg-white p-4 rounded-lg border border-warm-border metric-card active-metric" onclick="app.highlightPatientChart(0, this)">
+                    <div class="font-bold text-accent-primary">患者満足度スコア推移</div>
+                    <div class="text-sm text-warm-text-sub mt-1">アンケート評価の月次平均。DX施策導入後から右肩上がりを示しています。</div>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-warm-border metric-card" onclick="app.highlightPatientChart(1, this)">
+                    <div class="font-bold text-accent-secondary">平均待合時間 (分)</div>
+                    <div class="text-sm text-warm-text-sub mt-1">受付から診察開始までの時間。システム稼働後、劇的に短縮されました。</div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm">
+                <div class="chart-container">
+                    <canvas id="patientChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-staff" class="view-section hidden">
+            <header class="mb-8">
+                <h2 class="text-3xl font-bold text-warm-text-main mb-2">現場スタッフの業務負荷軽減効果</h2>
+                <p class="text-warm-text-sub leading-relaxed">
+                    「理念（純水）」を体現するためには、スタッフの心理的・物理的余裕が不可欠です。AIチャットボットによる電話対応の削減、電子カルテ入力補助ツールの導入前後における、看護師・事務スタッフの業務ポートフォリオの変化を可視化します。
+                </p>
+            </header>
+
+            <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm mb-6">
+                <h3 class="text-lg font-bold mb-4">1日あたりの業務時間比率（導入前 vs 導入後）</h3>
+                <div class="chart-container">
+                    <canvas id="staffChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-warm-surface p-6 rounded-lg border border-warm-border">
+                <h4 class="font-bold text-accent-primary mb-2">&#128161; 経営企画室インサイト</h4>
+                <p class="text-sm text-warm-text-main leading-relaxed">
+                    データが示す通り、事務作業（泥水）の時間が大幅に削減され、その分が「直接的な患者ケア（純水）」の時間に転換されています。これがView2の患者満足度向上に直結していると考えられます。システムはあくまで翻訳機であり、最終的な価値は現場のスタッフが創出していることが証明されました。
+                </p>
+            </div>
+        </div>
+
+        <div id="view-web" class="view-section hidden">
+            <header class="mb-8">
+                <h2 class="text-3xl font-bold text-warm-text-main mb-2">Web集客戦略とチャネル分析</h2>
+                <p class="text-warm-text-sub leading-relaxed">
+                    AI検索（SGE等）の台頭に伴うWeb集客の構造変化を分析します。従来の検索エンジン最適化（SEO）だけに依存しない、多角的なポートフォリオへの移行状況を確認できます。
+                </p>
+            </header>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="w-full lg:w-1/2 bg-white p-6 rounded-lg border border-warm-border shadow-sm flex flex-col items-center justify-center">
+                    <h3 class="text-lg font-bold mb-4 w-full text-left">新規患者のWeb流入チャネル比率</h3>
+                    <div class="chart-container" style="height: 300px;">
+                        <canvas id="webChart"></canvas>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/2 flex flex-col gap-4">
+                    <div class="bg-white p-5 rounded-lg border border-warm-border shadow-sm border-l-4 border-l-[#4a6b5d]">
+                        <h4 class="font-bold mb-1">自然検索 (SEO) - 45%</h4>
+                        <p class="text-sm text-warm-text-sub">従来型の検索流入。依然として最大チャネルですが、前年比で比率は低下傾向にあります。</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg border border-warm-border shadow-sm border-l-4 border-l-[#d4a373]">
+                        <h4 class="font-bold mb-1">AI概要・対話型AI (SGE/ChatGPT) - 25%</h4>
+                        <p class="text-sm text-warm-text-sub">急成長中のチャネル。「〇〇市 優しい 小児科」といった文脈検索からの高確度な流入が増加しています。</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg border border-warm-border shadow-sm border-l-4 border-l-[#8b9d93]">
+                        <h4 class="font-bold mb-1">ローカル検索 (Google Maps) - 20%</h4>
+                        <p class="text-sm text-warm-text-sub">近隣からの直接検索。口コミスコア（4.8）の高さが直接的な来院動機に繋がっています。</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg border border-warm-border shadow-sm border-l-4 border-l-[#e5e0d8]">
+                        <h4 class="font-bold mb-1">Web広告・その他 - 10%</h4>
+                        <p class="text-sm text-warm-text-sub">特定疾患に関するリスティング広告およびポータルサイトからの流入。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const app = {
+            currentView: 'overview',
+            charts: {},
+            
+            data: {
+                months: ['4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月', '1月', '2月', '3月'],
+                overview: {
+                    satisfaction: [4.1, 4.2, 4.2, 4.4, 4.5, 4.5, 4.6, 4.7, 4.7, 4.8, 4.8, 4.8],
+                    leads: [120, 135, 140, 180, 210, 230, 225, 250, 260, 280, 295, 310]
+                },
+                patient: {
+                    waitTimes: [27, 26, 25, 18, 16, 15, 14, 13, 13, 12, 12, 12],
+                    satisfaction: [4.1, 4.2, 4.2, 4.4, 4.5, 4.5, 4.6, 4.7, 4.7, 4.8, 4.8, 4.8]
+                },
+                staff: {
+                    labels: ['DX導入前 (前年度)', 'DX導入後 (今年度)'],
+                    admin: [45, 15],
+                    phone: [25, 10],
+                    care: [30, 75]
+                },
+                web: {
+                    labels: ['自然検索 (SEO)', 'AI検索 (SGE等)', 'ローカル検索', 'Web広告等'],
+                    data: [45, 25, 20, 10],
+                    colors: ['#4a6b5d', '#d4a373', '#8b9d93', '#e5e0d8']
+                }
+            },
+
+            init() {
+                this.renderCharts();
+                window.addEventListener('resize', () => this.resizeCharts());
+            },
+
+            switchView(viewId) {
+                document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+                
+                document.getElementById('view-' + viewId).classList.remove('hidden');
+                document.getElementById('nav-' + viewId).classList.add('active');
+                
+                this.currentView = viewId;
+                this.renderCharts();
+            },
+
+            clearChart(chartId) {
+                if (this.charts[chartId]) {
+                    this.charts[chartId].destroy();
+                }
+            },
+
+            renderCharts() {
+                Chart.defaults.font.family = '"Noto Sans JP", sans-serif';
+                Chart.defaults.color = '#6b635a';
+
+                if (this.currentView === 'overview') {
+                    this.clearChart('overviewChart');
+                    const ctx = document.getElementById('overviewChart').getContext('2d');
+                    this.charts['overviewChart'] = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: this.data.months,
+                            datasets: [
+                                {
+                                    label: '新規Web予約件数',
+                                    data: this.data.overview.leads,
+                                    borderColor: '#4a6b5d',
+                                    backgroundColor: 'rgba(74, 107, 93, 0.1)',
+                                    fill: true,
+                                    tension: 0.4,
+                                    yAxisID: 'y'
+                                },
+                                {
+                                    label: '総合満足度',
+                                    data: this.data.overview.satisfaction,
+                                    borderColor: '#d4a373',
+                                    borderDash: [5, 5],
+                                    fill: false,
+                                    tension: 0.4,
+                                    yAxisID: 'y1'
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            interaction: { mode: 'index', intersect: false },
+                            scales: {
+                                y: { type: 'linear', display: true, position: 'left', title: { display: true, text: '予約件数' } },
+                                y1: { type: 'linear', display: true, position: 'right', min: 3, max: 5, grid: { drawOnChartArea: false }, title: { display: true, text: '満足度スコア' } }
+                            }
+                        }
+                    });
+                } 
+                else if (this.currentView === 'patient') {
+                    this.clearChart('patientChart');
+                    const ctx = document.getElementById('patientChart').getContext('2d');
+                    this.charts['patientChart'] = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: this.data.months,
+                            datasets: [
+                                {
+                                    label: '満足度スコア (5点満点)',
+                                    data: this.data.patient.satisfaction,
+                                    borderColor: '#4a6b5d',
+                                    backgroundColor: '#4a6b5d',
+                                    borderWidth: 3,
+                                    yAxisID: 'y'
+                                },
+                                {
+                                    label: '平均待合時間 (分)',
+                                    data: this.data.patient.waitTimes,
+                                    borderColor: '#d4a373',
+                                    backgroundColor: '#d4a373',
+                                    borderWidth: 3,
+                                    yAxisID: 'y1'
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let label = context.dataset.label || '';
+                                            if (label) { label += ': '; }
+                                            if (context.parsed.y !== null) {
+                                                label += context.parsed.y + (context.datasetIndex === 1 ? ' 分' : ' 点');
+                                            }
+                                            return label;
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: { type: 'linear', display: true, position: 'left', min: 3, max: 5 },
+                                y1: { type: 'linear', display: true, position: 'right', min: 0, max: 40, grid: { drawOnChartArea: false } }
+                            }
+                        }
+                    });
+                }
+                else if (this.currentView === 'staff') {
+                    this.clearChart('staffChart');
+                    const ctx = document.getElementById('staffChart').getContext('2d');
+                    this.charts['staffChart'] = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: this.data.staff.labels,
+                            datasets: [
+                                { label: '患者ケア・対人業務 (%)', data: this.data.staff.care, backgroundColor: '#4a6b5d' },
+                                { label: '事務・カルテ入力 (%)', data: this.data.staff.admin, backgroundColor: '#d4a373' },
+                                { label: '電話対応・その他 (%)', data: this.data.staff.phone, backgroundColor: '#8b9d93' }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            indexAxis: 'y',
+                            scales: {
+                                x: { stacked: true, max: 100 },
+                                y: { stacked: true }
+                            },
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) { return context.dataset.label + ': ' + context.parsed.x + '%'; }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+                else if (this.currentView === 'web') {
+                    this.clearChart('webChart');
+                    const ctx = document.getElementById('webChart').getContext('2d');
+                    this.charts['webChart'] = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: this.data.web.labels,
+                            datasets: [{
+                                data: this.data.web.data,
+                                backgroundColor: this.data.web.colors,
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cutout: '65%',
+                            plugins: {
+                                legend: { position: 'bottom' }
+                            }
+                        }
+                    });
+                }
+            },
+
+            highlightPatientChart(datasetIndex, cardElement) {
+                if (!this.charts['patientChart']) return;
+                
+                document.querySelectorAll('#view-patient .metric-card').forEach(el => {
+                    el.classList.remove('active-metric');
+                    el.style.opacity = '0.6';
+                });
+                cardElement.classList.add('active-metric');
+                cardElement.style.opacity = '1';
+
+                const chart = this.charts['patientChart'];
+                chart.data.datasets.forEach((dataset, i) => {
+                    if (i === datasetIndex) {
+                        dataset.borderWidth = 4;
+                        dataset.borderColor = datasetIndex === 0 ? '#4a6b5d' : '#d4a373';
+                    } else {
+                        dataset.borderWidth = 1;
+                        dataset.borderColor = '#e5e0d8';
+                    }
+                });
+                chart.update();
+            },
+
+            resizeCharts() {
+                for (let id in this.charts) {
+                    if (this.charts[id]) { this.charts[id].resize(); }
+                }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>
