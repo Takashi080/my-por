@@ -3,21 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026年度 医療法人DX・患者満足度インタラクティブレポート</title>
+    <title>エアーボックス (Airbox) | 維持費0円。想いを届ける「デジタル名刺」</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'warm-bg': '#fcfbf9',
-                        'warm-surface': '#f3f0ea',
-                        'warm-border': '#e5e0d8',
-                        'warm-text-main': '#3a352f',
-                        'warm-text-sub': '#6b635a',
-                        'accent-primary': '#4a6b5d',
-                        'accent-secondary': '#d4a373',
+                        'brand-navy': '#112240',
+                        'brand-teal': '#2dd4bf',
+                        'brand-bg': '#fcfbf9',
+                        'text-main': '#3a352f',
                     },
                     fontFamily: {
                         sans: ['"Noto Sans JP"', 'sans-serif'],
@@ -27,422 +24,498 @@
         }
     </script>
     <style>
-        body { background-color: #fcfbf9; color: #3a352f; margin: 0; padding: 0; overflow-x: hidden; }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 50vh;
-            max-height: 400px;
+        body { font-family: '"Noto Sans JP"', sans-serif; background-color: #fcfbf9; color: #3a352f; scroll-behavior: smooth; }
+        .gradient-text {
+            background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        @media (min-width: 768px) {
-            .chart-container { height: 400px; }
+        .hero-pattern {
+            background-color: #112240;
+            background-image: radial-gradient(rgba(45, 212, 191, 0.15) 1px, transparent 1px);
+            background-size: 30px 30px;
         }
-        .nav-btn.active {
-            background-color: #f3f0ea;
-            border-left: 4px solid #4a6b5d;
-            font-weight: bold;
-            color: #4a6b5d;
-        }
-        .metric-card { transition: all 0.2s ease-in-out; cursor: pointer; }
-        .metric-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-color: #4a6b5d; }
-        .metric-card.active-metric { background-color: #eef2f0; border-color: #4a6b5d; }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .profile-shadow { box-shadow: 0 20px 25px -5px rgba(45, 212, 191, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
     </style>
 </head>
-<body class="flex flex-col md:flex-row min-h-screen">
+<body class="antialiased flex flex-col min-h-screen">
 
-<!-- Chosen Palette: Warm Medical Neutrals (Background: #fcfbf9, Surface: #f3f0ea, Primary Accent: #4a6b5d (Teal/Green), Secondary Accent: #d4a373 (Warm Sand)) -->
-<!-- Application Structure Plan: The SPA is structured as a dashboard with a sidebar navigation to facilitate focused exploration of complex data. Instead of a linear report, content is grouped by strategic themes: Executive Overview, Patient Experience, Staff Efficiency, and Web Strategy. This allows users (management) to immediately access the metrics relevant to their specific concerns. The layout uses a fixed sidebar on desktop (bottom bar on mobile) and a dynamic main content area. Interactive metric cards update the central charts, fostering active data exploration rather than passive reading. -->
-<!-- Visualization & Content Choices: 1. Executive KPIs -> Metric Cards -> Quick cognitive processing of health. 2. Patient Satisfaction vs Wait Times -> Dual-axis Line Chart -> Shows inverse correlation clearly. 3. Staff Workload -> Stacked Bar Chart -> Compares time distribution before/after DX implementation. 4. Web Strategy -> Doughnut Chart -> Illustrates traffic source distribution. All charts use Chart.js Canvas rendering. NO SVG or Mermaid used. -->
-<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
-    <nav class="w-full md:w-64 bg-white border-r border-warm-border flex flex-col justify-between shadow-sm z-10 sticky top-0 md:h-screen">
-        <div>
-            <div class="p-6 border-b border-warm-border">
-                <h1 class="text-xl font-bold text-accent-primary leading-tight">医療法人DX<br>総合レポート</h1>
-                <p class="text-xs text-warm-text-sub mt-2">2026年度実績分析</p>
-            </div>
-            <div class="flex flex-row md:flex-col overflow-x-auto md:overflow-visible p-2 md:p-4 gap-2" id="nav-container">
-                <button onclick="app.switchView('overview')" id="nav-overview" class="nav-btn active flex items-center w-full text-left px-4 py-3 rounded text-sm whitespace-nowrap md:whitespace-normal transition-colors text-warm-text-main hover:bg-warm-surface">
-                    <span class="mr-2 text-lg">&#128200;</span> 経営サマリー
-                </button>
-                <button onclick="app.switchView('patient')" id="nav-patient" class="nav-btn flex items-center w-full text-left px-4 py-3 rounded text-sm whitespace-nowrap md:whitespace-normal transition-colors text-warm-text-main hover:bg-warm-surface">
-                    <span class="mr-2 text-lg">&#127973;</span> 患者満足度分析
-                </button>
-                <button onclick="app.switchView('staff')" id="nav-staff" class="nav-btn flex items-center w-full text-left px-4 py-3 rounded text-sm whitespace-nowrap md:whitespace-normal transition-colors text-warm-text-main hover:bg-warm-surface">
-                    <span class="mr-2 text-lg">&#128101;</span> 現場負荷軽減
-                </button>
-                <button onclick="app.switchView('web')" id="nav-web" class="nav-btn flex items-center w-full text-left px-4 py-3 rounded text-sm whitespace-nowrap md:whitespace-normal transition-colors text-warm-text-main hover:bg-warm-surface">
-                    <span class="mr-2 text-lg">&#128187;</span> Web集客戦略
-                </button>
-            </div>
-        </div>
-        <div class="p-4 hidden md:block text-xs text-warm-text-sub border-t border-warm-border">
-            経営企画室 作成<br>Confidential
-        </div>
-    </nav>
-
-    <main class="flex-1 p-4 md:p-8 lg:p-12 overflow-y-auto w-full max-w-7xl mx-auto">
-        
-        <div id="view-overview" class="view-section">
-            <header class="mb-8">
-                <h2 class="text-3xl font-bold text-warm-text-main mb-2">経営サマリー：DX投資による統合的成果</h2>
-                <p class="text-warm-text-sub leading-relaxed">
-                    本セクションでは、法人の理念である「質の高い医療の提供」と、それを支える経営基盤の現状を俯瞰します。DX（デジタルトランスフォーメーション）投資が、患者満足度、現場スタッフの労働環境、そして新規集客にどのようなインパクトを与えたかを総括しています。
-                </p>
-            </header>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm">
-                    <div class="text-sm text-warm-text-sub mb-1">総合患者満足度</div>
-                    <div class="text-3xl font-bold text-accent-primary">4.8<span class="text-lg text-warm-text-sub font-normal">/5.0</span></div>
-                    <div class="text-xs text-green-600 mt-2">&#9650; 前年比 +0.4pt</div>
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-sm shadow-sm fixed w-full z-50 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-box-open text-brand-teal text-2xl"></i>
+                    <span class="font-bold text-2xl tracking-tight text-brand-navy">Airbox<span class="text-sm font-normal text-slate-500 ml-2 hidden sm:inline">エアーボックス</span></span>
                 </div>
-                <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm">
-                    <div class="text-sm text-warm-text-sub mb-1">平均待合時間</div>
-                    <div class="text-3xl font-bold text-accent-primary">12<span class="text-lg text-warm-text-sub font-normal">分</span></div>
-                    <div class="text-xs text-green-600 mt-2">&#9660; 前年比 -15分 (大幅改善)</div>
-                </div>
-                <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm">
-                    <div class="text-sm text-warm-text-sub mb-1">スタッフ残業時間</div>
-                    <div class="text-3xl font-bold text-accent-primary">8.5<span class="text-lg text-warm-text-sub font-normal">h/月</span></div>
-                    <div class="text-xs text-green-600 mt-2">&#9660; 前年比 -45%</div>
-                </div>
-                <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm">
-                    <div class="text-sm text-warm-text-sub mb-1">新規Web予約率</div>
-                    <div class="text-3xl font-bold text-accent-primary">78<span class="text-lg text-warm-text-sub font-normal">%</span></div>
-                    <div class="text-xs text-green-600 mt-2">&#9650; 前年比 +22%</div>
-                </div>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm mb-8">
-                <h3 class="text-lg font-bold mb-4">月次総合パフォーマンス推移</h3>
-                <div class="chart-container">
-                    <canvas id="overviewChart"></canvas>
+                <nav class="hidden lg:flex space-x-8">
+                    <a href="#news" class="text-sm font-medium text-slate-600 hover:text-brand-teal transition-colors">お知らせ</a>
+                    <a href="#concept" class="text-sm font-medium text-slate-600 hover:text-brand-teal transition-colors">コンセプト</a>
+                    <a href="#features" class="text-sm font-medium text-slate-600 hover:text-brand-teal transition-colors">仕組み</a>
+                    <a href="#pricing" class="text-sm font-medium text-slate-600 hover:text-brand-teal transition-colors">料金</a>
+                    <a href="#profile" class="text-sm font-medium text-slate-600 hover:text-brand-teal transition-colors">伴走者</a>
+                </nav>
+                <div>
+                    <a href="#contact" class="bg-brand-navy hover:bg-slate-800 text-white px-5 py-2.5 rounded-md text-sm font-bold transition-all shadow-md">
+                        相談してみる
+                    </a>
                 </div>
             </div>
         </div>
+    </header>
 
-        <div id="view-patient" class="view-section hidden">
-            <header class="mb-8">
-                <h2 class="text-3xl font-bold text-warm-text-main mb-2">患者満足度と待合時間の相関分析</h2>
-                <p class="text-warm-text-sub leading-relaxed">
-                    WEB問診システムおよび自動精算機の導入が、患者様の体験価値にどう寄与したかを分析します。下の指標カードをクリックすることで、グラフ上の特定のデータラインを強調表示し、施策ごとの効果を比較・検証できます。
-                </p>
-            </header>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <div class="bg-white p-4 rounded-lg border border-warm-border metric-card active-metric" onclick="app.highlightPatientChart(0, this)">
-                    <div class="font-bold text-accent-primary">患者満足度スコア推移</div>
-                    <div class="text-sm text-warm-text-sub mt-1">アンケート評価の月次平均。DX施策導入後から右肩上がりを示しています。</div>
-                </div>
-                <div class="bg-white p-4 rounded-lg border border-warm-border metric-card" onclick="app.highlightPatientChart(1, this)">
-                    <div class="font-bold text-accent-secondary">平均待合時間 (分)</div>
-                    <div class="text-sm text-warm-text-sub mt-1">受付から診察開始までの時間。システム稼働後、劇的に短縮されました。</div>
-                </div>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm">
-                <div class="chart-container">
-                    <canvas id="patientChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div id="view-staff" class="view-section hidden">
-            <header class="mb-8">
-                <h2 class="text-3xl font-bold text-warm-text-main mb-2">現場スタッフの業務負荷軽減効果</h2>
-                <p class="text-warm-text-sub leading-relaxed">
-                    「理念（純水）」を体現するためには、スタッフの心理的・物理的余裕が不可欠です。AIチャットボットによる電話対応の削減、電子カルテ入力補助ツールの導入前後における、看護師・事務スタッフの業務ポートフォリオの変化を可視化します。
-                </p>
-            </header>
-
-            <div class="bg-white p-6 rounded-lg border border-warm-border shadow-sm mb-6">
-                <h3 class="text-lg font-bold mb-4">1日あたりの業務時間比率（導入前 vs 導入後）</h3>
-                <div class="chart-container">
-                    <canvas id="staffChart"></canvas>
-                </div>
-            </div>
-
-            <div class="bg-warm-surface p-6 rounded-lg border border-warm-border">
-                <h4 class="font-bold text-accent-primary mb-2">&#128161; 経営企画室インサイト</h4>
-                <p class="text-sm text-warm-text-main leading-relaxed">
-                    データが示す通り、事務作業（泥水）の時間が大幅に削減され、その分が「直接的な患者ケア（純水）」の時間に転換されています。これがView2の患者満足度向上に直結していると考えられます。システムはあくまで翻訳機であり、最終的な価値は現場のスタッフが創出していることが証明されました。
-                </p>
-            </div>
-        </div>
-
-        <div id="view-web" class="view-section hidden">
-            <header class="mb-8">
-                <h2 class="text-3xl font-bold text-warm-text-main mb-2">Web集客戦略とチャネル分析</h2>
-                <p class="text-warm-text-sub leading-relaxed">
-                    AI検索（SGE等）の台頭に伴うWeb集客の構造変化を分析します。従来の検索エンジン最適化（SEO）だけに依存しない、多角的なポートフォリオへの移行状況を確認できます。
-                </p>
-            </header>
-
-            <div class="flex flex-col lg:flex-row gap-8">
-                <div class="w-full lg:w-1/2 bg-white p-6 rounded-lg border border-warm-border shadow-sm flex flex-col items-center justify-center">
-                    <h3 class="text-lg font-bold mb-4 w-full text-left">新規患者のWeb流入チャネル比率</h3>
-                    <div class="chart-container" style="height: 300px;">
-                        <canvas id="webChart"></canvas>
+    <main class="flex-grow pt-20">
+        <!-- Hero Section -->
+        <section class="hero-pattern text-white py-24 lg:py-36 relative overflow-hidden">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-3/5 fade-in">
+                    <div class="inline-block px-3 py-1 bg-brand-teal/20 border border-brand-teal/30 text-brand-teal rounded-full text-xs font-bold tracking-wider mb-6 uppercase">
+                        Server & Domain: 0 Yen
+                    </div>
+                    <h1 class="text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight mb-6">
+                        あなたの想いを、<br>
+                        維持費ゼロで持ち歩く<br>
+                        <span class="gradient-text">デジタル名刺。</span>
+                    </h1>
+                    <p class="text-lg text-slate-300 mb-8 leading-relaxed max-w-2xl">
+                        会社のパンフレットだけでは、あなたの熱量は伝わりません。<br>
+                        一生維持費がかからない「空の箱」に、仕事への情熱だけを詰め込んで持ち歩きませんか？
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#pricing" class="bg-brand-teal hover:bg-teal-400 text-brand-navy font-bold py-3.5 px-10 rounded-md text-center transition-all shadow-lg">
+                            維持費0円の仕組み
+                        </a>
+                        <a href="#contact" class="bg-transparent border border-slate-500 hover:border-white text-white font-medium py-3.5 px-10 rounded-md text-center transition-all">
+                            まずは想いを聞かせてください
+                        </a>
                     </div>
                 </div>
-                <div class="w-full lg:w-1/2 flex flex-col gap-4">
-                    <div class="bg-white p-5 rounded-lg border border-warm-border shadow-sm border-l-4 border-l-[#4a6b5d]">
-                        <h4 class="font-bold mb-1">自然検索 (SEO) - 45%</h4>
-                        <p class="text-sm text-warm-text-sub">従来型の検索流入。依然として最大チャネルですが、前年比で比率は低下傾向にあります。</p>
-                    </div>
-                    <div class="bg-white p-5 rounded-lg border border-warm-border shadow-sm border-l-4 border-l-[#d4a373]">
-                        <h4 class="font-bold mb-1">AI概要・対話型AI (SGE/ChatGPT) - 25%</h4>
-                        <p class="text-sm text-warm-text-sub">急成長中のチャネル。「〇〇市 優しい 小児科」といった文脈検索からの高確度な流入が増加しています。</p>
-                    </div>
-                    <div class="bg-white p-5 rounded-lg border border-warm-border shadow-sm border-l-4 border-l-[#8b9d93]">
-                        <h4 class="font-bold mb-1">ローカル検索 (Google Maps) - 20%</h4>
-                        <p class="text-sm text-warm-text-sub">近隣からの直接検索。口コミスコア（4.8）の高さが直接的な来院動機に繋がっています。</p>
-                    </div>
-                    <div class="bg-white p-5 rounded-lg border border-warm-border shadow-sm border-l-4 border-l-[#e5e0d8]">
-                        <h4 class="font-bold mb-1">Web広告・その他 - 10%</h4>
-                        <p class="text-sm text-warm-text-sub">特定疾患に関するリスティング広告およびポータルサイトからの流入。</p>
+                <div class="lg:w-2/5 hidden lg:block opacity-90">
+                    <div class="relative w-full aspect-square flex items-center justify-center">
+                        <div class="absolute inset-0 border-2 border-brand-teal/30 rounded-[40px] animate-[pulse_4s_ease-in-out_infinite]"></div>
+                        <i class="fa-solid fa-box-open text-brand-teal text-8xl mb-4"></i>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
+        <!-- News Section (お知らせ) -->
+        <section id="news" class="py-16 bg-white border-b border-slate-100 relative">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4 border-b border-slate-200 pb-4">
+                    <h2 class="text-2xl font-bold text-brand-navy flex items-center">
+                        <i class="fa-solid fa-bullhorn text-brand-teal mr-3 text-xl"></i>お知らせ
+                    </h2>
+                    <span class="text-[11px] text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full font-medium tracking-wider flex items-center w-fit shadow-inner">
+                        <span class="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
+                        スプレッドシートと自動同期中
+                    </span>
+                </div>
+                
+                <!-- ▼ ここにJavaScriptでスプレッドシートのデータが自動挿入されます ▼ -->
+                <div id="news-container" class="space-y-1">
+                    <!-- 初期状態はローディング表示 -->
+                    <div class="text-center py-12 text-slate-400 text-sm flex flex-col items-center">
+                        <i class="fa-solid fa-circle-notch fa-spin text-3xl text-brand-teal/50 mb-4"></i>
+                        <span>お知らせを読み込んでいます...</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Concept Section -->
+        <section id="concept" class="py-24 bg-white relative">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-8 text-brand-navy">何にでもなれる、あなたのための「空箱」</h2>
+                <div class="w-16 h-1 bg-brand-teal mx-auto mb-10"></div>
+                
+                <p class="text-lg text-slate-600 mb-6 leading-relaxed text-center">
+                    「会社の看板」だけではなく、「あなた自身の誠実さ」を伝えたい営業担当者の方。<br>これから事業を始める個人事業主の方。
+                </p>
+                <p class="text-lg text-slate-600 mb-12 leading-relaxed text-left md:text-center">
+                    エアーボックス（Airbox）は、あらかじめ機能が決まった「箱」ではありません。余計なものを削ぎ落とした「空っぽの器」だからこそ、お客様の想いに合わせてどんな形にもなれるのです。
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 shadow-sm hover:border-brand-teal/30 transition-all">
+                        <h3 class="font-bold text-xl text-brand-navy mb-4 flex items-center">
+                            <i class="fa-solid fa-wind text-brand-teal mr-3"></i>不純物を排除する
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            誰も読まない長いページや、高額な維持費。そんな「泥水」を全て排除しました。パッと見て「あなたが誰で、何をしてくれるのか」が伝わる看板を提供します。
+                        </p>
+                    </div>
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 shadow-sm hover:border-brand-teal/30 transition-all">
+                        <h3 class="font-bold text-xl text-brand-navy mb-4 flex items-center">
+                            <i class="fa-solid fa-heart text-brand-teal mr-3"></i>想いを形にする「伴走者」
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            単に作るだけではありません。あなたが普段大切にしている熱量をヒアリングし、第三者に伝わる優しい言葉へと一緒に整えていきます。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section id="features" class="py-24 bg-brand-navy text-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold mb-4 text-brand-teal">Google無料ツールを使い倒すハック</h2>
+                    <p class="text-slate-300">専用システムを持たず、既存インフラを繋ぎ合わせることで一生続くコストを「ゼロ」にします。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <i class="fa-solid fa-circle-check text-brand-teal mr-3"></i>Airboxが「提供すること」
+                        </h3>
+                        <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+                            <div class="flex items-center gap-4 mb-3">
+                                <i class="fa-solid fa-server text-blue-400 text-2xl"></i>
+                                <h4 class="font-bold text-lg text-white">維持費0円のインフラ構築</h4>
+                            </div>
+                            <p class="text-sm text-slate-300">Google Sites等の無料プラットフォームを活用。レンタルサーバー代やドメイン更新料の心配を一生不要にします。</p>
+                        </div>
+                        <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+                            <div class="flex items-center gap-4 mb-3">
+                                <i class="fa-solid fa-table-list text-green-400 text-2xl"></i>
+                                <h4 class="font-bold text-lg text-white">スプレッドシートでお知らせ更新</h4>
+                            </div>
+                            <p class="text-sm text-slate-300">複雑な管理画面は不要。あなたが表計算シートに入力するだけで、HPのお知らせが自動更新される仕組みを作ります。</p>
+                        </div>
+                        <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+                            <div class="flex items-center gap-4 mb-3">
+                                <i class="fa-solid fa-envelope-open-text text-purple-400 text-2xl"></i>
+                                <h4 class="font-bold text-lg text-white">Googleフォームで直接連絡</h4>
+                            </div>
+                            <p class="text-sm text-slate-300">お問い合わせはGoogleフォームと連携。お客様からの連絡は、あなたのスマホへダイレクトに届きます。</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <i class="fa-solid fa-circle-xmark text-red-400 mr-3"></i>あえて「やらないこと」
+                        </h3>
+                        <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                            「想いを形にし、維持費をゼロにする」ために、私たちは以下の重荷を削ぎ落としています。
+                        </p>
+                        <div class="bg-red-500/5 p-6 rounded-xl border border-red-500/20">
+                            <h4 class="font-bold text-red-300 mb-1">× 検索上位表示（SEO）対策</h4>
+                            <p class="text-sm text-slate-400">「検索で見つけてもらう」のではなく、名刺やURLから「あなたの想いを確認してもらう」ための信頼の看板（受け皿）として割り切ります。</p>
+                        </div>
+                        <div class="bg-red-500/5 p-6 rounded-xl border border-red-500/20">
+                            <h4 class="font-bold text-red-300 mb-1">× 独自の高度なシステム開発</h4>
+                            <p class="text-sm text-slate-400">会員機能などの独自開発は行いません。その分、身軽で壊れない「箱」を最短で提供します。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-24 bg-slate-50">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-brand-navy mb-4 text-center">一生続く維持費を「ゼロ」に</h2>
+                    <div class="w-16 h-1 bg-brand-teal mx-auto mb-6"></div>
+                    <p class="text-slate-600 text-center">保守費用で儲けるモデルではありません。あなたの想いを形にする「一度きり」の制作費のみ。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto text-left">
+                    <!-- 維持費 -->
+                    <div class="md:col-span-2 bg-white rounded-2xl p-10 border-2 border-brand-teal shadow-xl relative overflow-hidden transform md:-translate-y-4">
+                        <div class="absolute top-0 right-0 bg-brand-teal text-brand-navy font-bold px-6 py-2 rounded-bl-xl text-xs uppercase tracking-widest">
+                            Maintenance Free
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-navy mb-1">HP維持・管理費</h3>
+                        <p class="text-slate-400 text-xs mb-8">サイトを公開し続けるための固定費</p>
+                        
+                        <div class="flex items-baseline mb-8 justify-start">
+                            <span class="text-7xl font-extrabold text-brand-navy">¥0</span>
+                            <span class="text-xl text-slate-500 ml-4 font-bold">/ 月額（完全無料）</span>
+                        </div>
+                        
+                        <ul class="text-base text-slate-600 space-y-4 mb-4">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-brand-teal mr-3"></i> サーバー代・ドメイン更新料 0円</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-brand-teal mr-3"></i> 解約金・違約金・縛り 一切なし</li>
+                        </ul>
+                    </div>
+
+                    <!-- 修正費 -->
+                    <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-md flex flex-col justify-center">
+                        <h3 class="text-lg font-bold text-brand-navy mb-2">スポット修正</h3>
+                        <p class="text-slate-500 text-xs mb-6">「肩書きを変えたい」「写真を差し替えたい」場合に</p>
+                        
+                        <div class="flex items-baseline mb-6">
+                            <span class="text-3xl font-bold text-brand-navy">¥500</span>
+                            <span class="text-sm text-slate-500 ml-2">/ 1回</span>
+                        </div>
+                        
+                        <p class="text-xs text-slate-500 leading-relaxed text-left">
+                            必要な時にワンコインで。高額な保守契約を結ばなくても、あなたの変化に寄り添います。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Self-Proof Section -->
+        <section class="py-16 bg-brand-teal/10 border-y border-brand-teal/20">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <i class="fa-solid fa-lightbulb text-4xl text-brand-teal mb-4"></i>
+                <h3 class="text-2xl font-bold text-brand-navy mb-4">ちなみに、今ご覧のこのサイトも維持費「0円」です。</h3>
+                <p class="text-slate-600 text-base leading-relaxed max-w-2xl mx-auto">
+                    説得力を持たせるため、Airboxの公式サイト自体も、お客様に提供する仕組みと全く同じ構成（サーバー代無料）で運用しています。<br>
+                    維持費ゼロでも、これだけ美しく、表示速度の速いサイト（空箱）が作れるという証明です。
+                </p>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="py-24 bg-white">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-brand-navy rounded-[40px] overflow-hidden shadow-2xl flex flex-col md:flex-row profile-shadow border border-white/10">
+                    <!-- 代表プロフィール写真 -->
+                    <div class="md:w-5/12 relative min-h-[400px] bg-slate-800 overflow-hidden">
+                        <img src="profile.jpg" 
+                             alt="阪本貴史 プロフィール" 
+                             style="display: block; width: 100%; height: 100%; object-fit: cover;"
+                             class="absolute inset-0 z-10"
+                             onerror="this.style.display='none'; document.getElementById('preview-fallback').style.display='flex';">
+                        <div id="preview-fallback" class="absolute inset-0 z-0 hidden flex-col items-center justify-center bg-slate-800 text-brand-teal p-8 text-center border-r border-slate-700">
+                            <i class="fa-solid fa-image-portrait text-6xl mb-4 opacity-70"></i>
+                            <span class="text-sm font-bold tracking-wide">本番環境では、ここに<br>阪本様の写真が表示されます。</span>
+                            <span class="text-xs text-slate-400 mt-4 leading-relaxed">※現在のプレビュー画面ではセキュリティ上<br>直接画像を読み込めない仕様のため、<br>この案内枠を表示しています。</span>
+                        </div>
+                    </div>
+
+                    <div class="md:w-7/12 p-10 md:p-16 text-white flex flex-col justify-center text-left relative z-20 bg-brand-navy">
+                        <div class="inline-block px-4 py-1 bg-brand-teal text-brand-navy text-xs font-bold rounded-full mb-6 w-fit uppercase tracking-wider">
+                            Founder / Partner
+                        </div>
+                        <h2 class="text-4xl font-bold mb-3">阪本 貴史 <span class="text-lg font-normal text-slate-400 ml-2">Takafumi Sakamoto</span></h2>
+                        <p class="text-brand-teal font-medium mb-8 italic text-lg border-l-2 border-brand-teal pl-4">民間医療法人 経営企画部にて勤務</p>
+                        
+                        <div class="space-y-6 text-slate-300 text-sm md:text-base leading-relaxed">
+                            <p>
+                                本業では医療法人の経営企画として、日々複雑な組織の課題と向き合っています。「誰もが思いを持って働いている」——私はそう信じていますが、その熱量が仕組みの壁に阻まれ、伝わっていないケースを数多く見てきました。
+                            </p>
+                            <p>
+                                この「複雑なものを削ぎ落とし、個人の熱量をシンプルに伝える」というスキルと、Googleツールを繋ぐハックは、個人のデジタル名刺制作において最高の相性だと確信しています。
+                            </p>
+                            <p>
+                                「ITは苦手」という方も、ご安心ください。あなたの仕事への想いを一緒に見つけ出し、最高の一枚の「空箱」に仕上げる伴走者として、丁寧にサポートいたします。
+                            </p>
+                        </div>
+                        
+                        <div class="mt-10 flex flex-wrap gap-4">
+                            <!-- ▼ XのURLを反映しました ▼ -->
+                            <a href="https://x.com/2022AIRBOX" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-brand-teal hover:text-brand-navy text-white rounded-xl transition-all border border-white/20 text-sm font-bold shadow-sm">
+                                <i class="fa-brands fa-x-twitter"></i> X (Twitter)
+                            </a>
+                            <!-- ▼ noteのURLを反映しました ▼ -->
+                            <a href="https://note.com/gay_iguana46taka" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-brand-teal hover:text-brand-navy text-white rounded-xl transition-all border border-white/20 text-sm font-bold shadow-sm">
+                                <i class="fa-solid fa-book-open"></i> note
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="contact" class="py-24 bg-gradient-to-br from-brand-teal to-blue-600 text-white text-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]"></div>
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <h2 class="text-3xl md:text-5xl font-bold mb-8 leading-tight">あなたの「想い」を、<br>聞かせてください。</h2>
+                <p class="text-xl text-teal-50 mb-12 leading-relaxed">
+                    「名刺代わりにこんなページを作れないか？」「まずは相談だけでもいいか？」<br>
+                    まずは一度、フランクにお話ししましょう。
+                </p>
+                
+                <div class="bg-white/10 p-10 md:p-16 rounded-3xl backdrop-blur-md border border-white/20">
+                    <i class="fa-brands fa-google text-5xl mb-8"></i>
+                    <h3 class="text-2xl font-bold mb-6">お問い合わせ（Googleフォームへ）</h3>
+                    <p class="text-base text-teal-100 mb-10 leading-relaxed text-center">
+                        Airbox自身も維持費を極限まで抑えるため、高額なメールシステムは使用せず<br class="hidden md:block">Googleフォームを利用して皆様からのご連絡を承っております。
+                    </p>
+                    
+                    <a href="https://forms.gle/gFdePuY9pSXqd2wY6" target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center gap-3 w-full md:w-auto bg-white hover:bg-slate-100 text-brand-navy font-bold py-5 px-14 rounded-2xl transition-all shadow-xl text-xl active:scale-95">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-brand-teal"></i>
+                        無料相談フォームを開く
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-500 py-20 text-center border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-8">
+                <i class="fa-solid fa-box-open text-brand-teal text-2xl"></i>
+                <span class="font-bold text-2xl tracking-tight text-white">Airbox</span>
+            </div>
+            <p class="text-sm mb-12 tracking-[0.2em] uppercase font-medium">Simple Box, Pure Passion.</p>
+            <div class="text-xs tracking-widest opacity-60">
+                &copy; 2026 Airbox / Takafumi Sakamoto. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
     <script>
-        const app = {
-            currentView: 'overview',
-            charts: {},
-            
-            data: {
-                months: ['4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月', '1月', '2月', '3月'],
-                overview: {
-                    satisfaction: [4.1, 4.2, 4.2, 4.4, 4.5, 4.5, 4.6, 4.7, 4.7, 4.8, 4.8, 4.8],
-                    leads: [120, 135, 140, 180, 210, 230, 225, 250, 260, 280, 295, 310]
-                },
-                patient: {
-                    waitTimes: [27, 26, 25, 18, 16, 15, 14, 13, 13, 12, 12, 12],
-                    satisfaction: [4.1, 4.2, 4.2, 4.4, 4.5, 4.5, 4.6, 4.7, 4.7, 4.8, 4.8, 4.8]
-                },
-                staff: {
-                    labels: ['DX導入前 (前年度)', 'DX導入後 (今年度)'],
-                    admin: [45, 15],
-                    phone: [25, 10],
-                    care: [30, 75]
-                },
-                web: {
-                    labels: ['自然検索 (SEO)', 'AI検索 (SGE等)', 'ローカル検索', 'Web広告等'],
-                    data: [45, 25, 20, 10],
-                    colors: ['#4a6b5d', '#d4a373', '#8b9d93', '#e5e0d8']
-                }
-            },
-
-            init() {
-                this.renderCharts();
-                window.addEventListener('resize', () => this.resizeCharts());
-            },
-
-            switchView(viewId) {
-                document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-                document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-                
-                document.getElementById('view-' + viewId).classList.remove('hidden');
-                document.getElementById('nav-' + viewId).classList.add('active');
-                
-                this.currentView = viewId;
-                this.renderCharts();
-            },
-
-            clearChart(chartId) {
-                if (this.charts[chartId]) {
-                    this.charts[chartId].destroy();
-                }
-            },
-
-            renderCharts() {
-                Chart.defaults.font.family = '"Noto Sans JP", sans-serif';
-                Chart.defaults.color = '#6b635a';
-
-                if (this.currentView === 'overview') {
-                    this.clearChart('overviewChart');
-                    const ctx = document.getElementById('overviewChart').getContext('2d');
-                    this.charts['overviewChart'] = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: this.data.months,
-                            datasets: [
-                                {
-                                    label: '新規Web予約件数',
-                                    data: this.data.overview.leads,
-                                    borderColor: '#4a6b5d',
-                                    backgroundColor: 'rgba(74, 107, 93, 0.1)',
-                                    fill: true,
-                                    tension: 0.4,
-                                    yAxisID: 'y'
-                                },
-                                {
-                                    label: '総合満足度',
-                                    data: this.data.overview.satisfaction,
-                                    borderColor: '#d4a373',
-                                    borderDash: [5, 5],
-                                    fill: false,
-                                    tension: 0.4,
-                                    yAxisID: 'y1'
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            interaction: { mode: 'index', intersect: false },
-                            scales: {
-                                y: { type: 'linear', display: true, position: 'left', title: { display: true, text: '予約件数' } },
-                                y1: { type: 'linear', display: true, position: 'right', min: 3, max: 5, grid: { drawOnChartArea: false }, title: { display: true, text: '満足度スコア' } }
-                            }
-                        }
-                    });
-                } 
-                else if (this.currentView === 'patient') {
-                    this.clearChart('patientChart');
-                    const ctx = document.getElementById('patientChart').getContext('2d');
-                    this.charts['patientChart'] = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: this.data.months,
-                            datasets: [
-                                {
-                                    label: '満足度スコア (5点満点)',
-                                    data: this.data.patient.satisfaction,
-                                    borderColor: '#4a6b5d',
-                                    backgroundColor: '#4a6b5d',
-                                    borderWidth: 3,
-                                    yAxisID: 'y'
-                                },
-                                {
-                                    label: '平均待合時間 (分)',
-                                    data: this.data.patient.waitTimes,
-                                    borderColor: '#d4a373',
-                                    backgroundColor: '#d4a373',
-                                    borderWidth: 3,
-                                    yAxisID: 'y1'
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            let label = context.dataset.label || '';
-                                            if (label) { label += ': '; }
-                                            if (context.parsed.y !== null) {
-                                                label += context.parsed.y + (context.datasetIndex === 1 ? ' 分' : ' 点');
-                                            }
-                                            return label;
-                                        }
-                                    }
-                                }
-                            },
-                            scales: {
-                                y: { type: 'linear', display: true, position: 'left', min: 3, max: 5 },
-                                y1: { type: 'linear', display: true, position: 'right', min: 0, max: 40, grid: { drawOnChartArea: false } }
-                            }
-                        }
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
                     });
                 }
-                else if (this.currentView === 'staff') {
-                    this.clearChart('staffChart');
-                    const ctx = document.getElementById('staffChart').getContext('2d');
-                    this.charts['staffChart'] = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: this.data.staff.labels,
-                            datasets: [
-                                { label: '患者ケア・対人業務 (%)', data: this.data.staff.care, backgroundColor: '#4a6b5d' },
-                                { label: '事務・カルテ入力 (%)', data: this.data.staff.admin, backgroundColor: '#d4a373' },
-                                { label: '電話対応・その他 (%)', data: this.data.staff.phone, backgroundColor: '#8b9d93' }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            indexAxis: 'y',
-                            scales: {
-                                x: { stacked: true, max: 100 },
-                                y: { stacked: true }
-                            },
-                            plugins: {
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) { return context.dataset.label + ': ' + context.parsed.x + '%'; }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-                else if (this.currentView === 'web') {
-                    this.clearChart('webChart');
-                    const ctx = document.getElementById('webChart').getContext('2d');
-                    this.charts['webChart'] = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: this.data.web.labels,
-                            datasets: [{
-                                data: this.data.web.data,
-                                backgroundColor: this.data.web.colors,
-                                borderWidth: 0
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            cutout: '65%',
-                            plugins: {
-                                legend: { position: 'bottom' }
-                            }
-                        }
-                    });
-                }
-            },
+            });
+        });
 
-            highlightPatientChart(datasetIndex, cardElement) {
-                if (!this.charts['patientChart']) return;
-                
-                document.querySelectorAll('#view-patient .metric-card').forEach(el => {
-                    el.classList.remove('active-metric');
-                    el.style.opacity = '0.6';
-                });
-                cardElement.classList.add('active-metric');
-                cardElement.style.opacity = '1';
-
-                const chart = this.charts['patientChart'];
-                chart.data.datasets.forEach((dataset, i) => {
-                    if (i === datasetIndex) {
-                        dataset.borderWidth = 4;
-                        dataset.borderColor = datasetIndex === 0 ? '#4a6b5d' : '#d4a373';
-                    } else {
-                        dataset.borderWidth = 1;
-                        dataset.borderColor = '#e5e0d8';
-                    }
-                });
-                chart.update();
-            },
-
-            resizeCharts() {
-                for (let id in this.charts) {
-                    if (this.charts[id]) { this.charts[id].resize(); }
-                }
+        // Header scroll behavior
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+                header.classList.remove('bg-white/95');
+                header.classList.add('bg-white');
+            } else {
+                header.classList.remove('shadow-md');
+                header.classList.remove('bg-white');
+                header.classList.add('bg-white/95');
             }
-        };
+        });
 
+        // ▼ スプレッドシート連動お知らせ取得スクリプト ▼
         document.addEventListener('DOMContentLoaded', () => {
-            app.init();
+            // 阪本様から提供されたスプレッドシートのCSV公開URL
+            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_F1Mbeih7N70lLgH1Nd2wnerpvwzkZevMJS81U1wQ5y-KkVo3-i2q2YxrC6HcaoWyxgRVXQAa77w/pub?output=csv';
+            const container = document.getElementById('news-container');
+
+            fetch(csvUrl)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(csvText => {
+                    const rows = parseCSV(csvText);
+                    // 1行目はヘッダー(日付,カテゴリ,内容,URL)と想定し、2行目から抽出。空行は除外
+                    const dataRows = rows.slice(1).filter(row => row.length >= 3 && row[0].trim() !== '');
+
+                    if (dataRows.length === 0) {
+                        container.innerHTML = '<div class="text-center py-8 text-slate-500 text-sm border-b border-slate-50">現在、新しいお知らせはありません。</div>';
+                        return;
+                    }
+
+                    container.innerHTML = ''; // ローディングをクリア
+
+                    dataRows.forEach(row => {
+                        const date = row[0] || '';
+                        const category = row[1] || '';
+                        const content = row[2] || '';
+                        const url = row[3] ? row[3].trim() : '';
+
+                        // カテゴリによる色の出し分け（モダンな淡いトーン＋ボーダー）
+                        let catStyle = 'bg-slate-50 text-slate-600 border border-slate-200'; // Default
+                        const catLower = category.trim().toLowerCase();
+                        if (catLower === 'new') catStyle = 'bg-teal-50 text-teal-700 border border-teal-200';
+                        if (catLower.includes('press') || catLower.includes('公式') || catLower.includes('重要')) catStyle = 'bg-blue-50 text-blue-700 border border-blue-200';
+                        
+                        // URL（D列）がある場合はリンク付きデザインにする
+                        if (url) {
+                            const isPdf = url.toLowerCase().endsWith('.pdf');
+                            const linkIcon = isPdf ? '<i class="fa-solid fa-file-pdf"></i>' : '<i class="fa-solid fa-arrow-right"></i>';
+                            const linkText = isPdf ? 'PDFを開く' : '詳細を見る';
+                            const linkColor = isPdf ? 'text-blue-600' : 'text-brand-teal';
+
+                            container.innerHTML += `
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="block py-5 border-b border-slate-100 hover:bg-slate-50/80 transition-all duration-300 group">
+                                    <div class="flex flex-col md:flex-row md:items-start gap-3 md:gap-8 px-2 md:px-4">
+                                        <div class="flex items-center gap-4 md:w-64 flex-shrink-0 pt-0.5">
+                                            <span class="text-sm text-slate-400 font-mono tracking-tight">${date}</span>
+                                            <span class="text-[10px] ${catStyle} font-bold px-2.5 py-1 rounded uppercase tracking-wider whitespace-nowrap shadow-sm">${category}</span>
+                                        </div>
+                                        <div class="flex-grow">
+                                            <p class="text-sm text-slate-700 font-medium leading-relaxed group-hover:text-brand-navy transition-colors">
+                                                ${content}
+                                            </p>
+                                        </div>
+                                        <div class="mt-2 md:mt-0 flex items-center justify-end md:justify-start ${linkColor} text-xs font-bold opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
+                                            <span class="mr-2">${linkText}</span>
+                                            ${linkIcon}
+                                        </div>
+                                    </div>
+                                </a>
+                            `;
+                        } else {
+                            // URLがない場合はテキストのみのデザイン
+                            container.innerHTML += `
+                                <div class="block py-5 border-b border-slate-100 hover:bg-slate-50/50 transition-colors px-2 md:px-4">
+                                    <div class="flex flex-col md:flex-row md:items-start gap-3 md:gap-8">
+                                        <div class="flex items-center gap-4 md:w-64 flex-shrink-0 pt-0.5">
+                                            <span class="text-sm text-slate-400 font-mono tracking-tight">${date}</span>
+                                            <span class="text-[10px] ${catStyle} font-bold px-2.5 py-1 rounded uppercase tracking-wider whitespace-nowrap shadow-sm">${category}</span>
+                                        </div>
+                                        <div class="flex-grow">
+                                            <p class="text-sm text-slate-700 font-medium leading-relaxed">
+                                                ${content}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('お知らせの取得に失敗しました:', error);
+                    container.innerHTML = '<div class="text-center py-8 text-red-400 text-sm border-b border-slate-50">お知らせの読み込みに失敗しました。</div>';
+                });
+
+            // 簡易CSVパーサー関数（カンマや改行を含むデータを正しく処理するため）
+            function parseCSV(text) {
+                const rows = [];
+                let row = [];
+                let currentWord = '';
+                let insideQuotes = false;
+                for (let i = 0; i < text.length; i++) {
+                    const char = text[i];
+                    if (char === '"') {
+                        if (insideQuotes && text[i+1] === '"') {
+                            currentWord += '"';
+                            i++;
+                        } else {
+                            insideQuotes = !insideQuotes;
+                        }
+                    } else if (char === ',' && !insideQuotes) {
+                        row.push(currentWord);
+                        currentWord = '';
+                    } else if ((char === '\n' || char === '\r') && !insideQuotes) {
+                        if (char === '\r' && text[i+1] === '\n') i++; // CRLF対応
+                        row.push(currentWord);
+                        rows.push(row);
+                        row = [];
+                        currentWord = '';
+                    } else {
+                        currentWord += char;
+                    }
+                }
+                if (currentWord !== '' || row.length > 0) {
+                    row.push(currentWord);
+                    rows.push(row);
+                }
+                return rows;
+            }
         });
     </script>
 </body>
