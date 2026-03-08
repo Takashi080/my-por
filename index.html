@@ -6,6 +6,63 @@
     <title>エアーボックス (Airbox) | 維持費0円。想いを届ける「デジタル名刺」</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- ▼ 【AI検索・SEO対策】構造化データ（JSON-LD） ▼ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "エアーボックス (Airbox)",
+      "description": "維持費0円。想いを届ける「デジタル名刺」。自分の足で稼ぐ営業職や独立直後の個人事業主向けWebサイト制作。頑張る人と上限なく関わり続ける伴走サポートサービスです。",
+      "provider": {
+        "@type": "Person",
+        "name": "阪本 貴史",
+        "alternateName": "Takafumi Sakamoto",
+        "jobTitle": "民間医療法人 経営企画部",
+        "url": "https://x.com/2022AIRBOX",
+        "sameAs": [
+          "https://note.com/gay_iguana46taka"
+        ]
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "JPY",
+        "lowPrice": "500",
+        "highPrice": "5000",
+        "offerCount": "3",
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "初期制作費",
+            "price": "1000",
+            "priceCurrency": "JPY",
+            "description": "簡単な構成の初期セットアップ費用（最大5,000円）"
+          },
+          {
+            "@type": "Offer",
+            "name": "保守サポート（伴走）",
+            "price": "500",
+            "priceCurrency": "JPY",
+            "description": "1年目500円、2年目1000円、以降毎年+500円の上限なしステップアップ伴走方式"
+          },
+          {
+            "@type": "Offer",
+            "name": "スポット修正",
+            "price": "3000",
+            "priceCurrency": "JPY",
+            "description": "サポート未加入時の単発修正作業"
+          }
+        ]
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "url": "https://forms.gle/gFdePuY9pSXqd2wY6"
+      }
+    }
+    </script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -24,7 +81,7 @@
         }
     </script>
     <style>
-        body { font-family: '"Noto Sans JP"', sans-serif; background-color: #fcfbf9; color: #3a352f; scroll-behavior: smooth; }
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #fcfbf9; color: #3a352f; scroll-behavior: smooth; }
         .gradient-text {
             background: linear-gradient(135deg, #2dd4bf, #3b82f6);
             -webkit-background-clip: text;
@@ -32,125 +89,144 @@
         }
         .hero-pattern {
             background-color: #112240;
-            background-image: radial-gradient(rgba(45, 212, 191, 0.15) 1px, transparent 1px);
+            background-image: radial-gradient(rgba(45, 212, 191, 0.1) 1px, transparent 1px);
             background-size: 30px 30px;
         }
-        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .profile-shadow { box-shadow: 0 20px 25px -5px rgba(45, 212, 191, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .fade-in { animation: fadeIn 1s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .profile-shadow { box-shadow: 0 20px 40px -10px rgba(17, 34, 64, 0.15), 0 10px 20px -10px rgba(0, 0, 0, 0.1); }
+        .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); }
+        .price-card { transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .price-card:hover { transform: translateY(-8px); }
+        
+        /* ▼ 文節折り返し用ハック（単語の途中での不自然な改行を防ぐ） ▼ */
+        .phrase { display: inline-block; }
     </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
 
     <!-- Header -->
-    <header class="bg-white/95 backdrop-blur-sm shadow-sm fixed w-full z-50 transition-all duration-300">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-box-open text-brand-teal text-2xl"></i>
-                    <span class="font-bold text-2xl tracking-tight text-brand-navy">Airbox<span class="text-sm font-normal text-slate-500 ml-2 hidden sm:inline">エアーボックス</span></span>
+    <header class="glass-nav shadow-sm fixed w-full z-50 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8">
+            <div class="flex justify-between items-center h-16 sm:h-20">
+                <div class="flex items-center gap-2 sm:gap-2.5">
+                    <i class="fa-solid fa-box-open text-brand-teal text-xl sm:text-2xl"></i>
+                    <span class="font-bold text-xl sm:text-2xl tracking-tight text-brand-navy">Airbox<span class="text-xs font-normal text-slate-400 ml-2 hidden lg:inline tracking-widest uppercase">Digital Meishi</span></span>
                 </div>
-                <nav class="hidden lg:flex space-x-8">
-                    <a href="#news" class="text-sm font-medium text-slate-600 hover:text-brand-teal transition-colors">お知らせ</a>
-                    <a href="#concept" class="text-sm font-medium text-slate-600 hover:text-brand-teal transition-colors">コンセプト</a>
-                    <a href="#features" class="text-sm font-medium text-slate-600 hover:text-brand-teal transition-colors">仕組み</a>
-                    <a href="#pricing" class="text-sm font-medium text-slate-600 hover:text-brand-teal transition-colors">料金</a>
-                    <a href="#profile" class="text-sm font-medium text-slate-600 hover:text-brand-teal transition-colors">伴走者</a>
+                <nav class="hidden lg:flex space-x-10">
+                    <a href="#news" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">お知らせ</a>
+                    <a href="#concept" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">コンセプト</a>
+                    <a href="#features" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">仕組み</a>
+                    <a href="#pricing" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">料金</a>
+                    <a href="#profile" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">伴走者</a>
                 </nav>
                 <div>
-                    <a href="#contact" class="bg-brand-navy hover:bg-slate-800 text-white px-5 py-2.5 rounded-md text-sm font-bold transition-all shadow-md">
-                        相談してみる
+                    <a href="#contact" class="bg-brand-navy hover:bg-slate-800 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-xs sm:text-sm font-bold transition-all shadow-lg active:scale-95">
+                        無料相談
                     </a>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="flex-grow pt-20">
+    <main class="flex-grow pt-16 sm:pt-20">
         <!-- Hero Section -->
-        <section class="hero-pattern text-white py-24 lg:py-36 relative overflow-hidden">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row items-center gap-12">
+        <section class="hero-pattern text-white py-16 sm:py-28 lg:py-40 relative overflow-hidden">
+            <div class="max-w-6xl mx-auto px-5 sm:px-8 relative z-10 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
                 <div class="lg:w-3/5 fade-in">
-                    <div class="inline-block px-3 py-1 bg-brand-teal/20 border border-brand-teal/30 text-brand-teal rounded-full text-xs font-bold tracking-wider mb-6 uppercase">
-                        Server & Domain: 0 Yen
+                    <div class="inline-block px-3 py-1 sm:px-4 sm:py-1.5 bg-brand-teal/10 border border-brand-teal/20 text-brand-teal rounded-full text-[10px] sm:text-[11px] font-bold tracking-[0.1em] sm:tracking-[0.2em] mb-6 sm:mb-8 uppercase whitespace-nowrap">
+                        For Independent Professionals
                     </div>
-                    <h1 class="text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight mb-6">
-                        あなたの想いを、<br>
-                        維持費ゼロで持ち歩く<br>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.3] sm:leading-[1.2] mb-6 sm:mb-8 tracking-tighter">
+                        想いを、<br class="sm:hidden">
+                        <span class="phrase">維持費ゼロで。</span><br>
                         <span class="gradient-text">デジタル名刺。</span>
                     </h1>
-                    <p class="text-lg text-slate-300 mb-8 leading-relaxed max-w-2xl">
-                        会社のパンフレットだけでは、あなたの熱量は伝わりません。<br>
-                        一生インフラ維持費がかからない「空の箱」に、仕事への情熱だけを詰め込んで持ち歩きませんか？
+                    <p class="text-sm sm:text-lg text-slate-300 mb-8 sm:mb-10 leading-relaxed max-w-xl font-medium">
+                        <span class="phrase">会社のパンフレットだけでは届かない、</span><span class="phrase">あなたの本当の熱量。</span><br class="hidden sm:block">
+                        <span class="phrase">独立直後の個人事業主や、</span><span class="phrase">自分の足で稼ぐ営業担当者のための、</span><span class="phrase">一生インフラ維持費不要の</span><span class="phrase">『空箱』です。</span>
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#pricing" class="bg-brand-teal hover:bg-teal-400 text-brand-navy font-bold py-3.5 px-10 rounded-md text-center transition-all shadow-lg">
-                            料金・サポート体制を見る
+                    <div class="flex flex-col sm:flex-row gap-4 sm:gap-5">
+                        <a href="#pricing" class="bg-brand-teal hover:bg-teal-400 text-brand-navy font-bold py-3.5 px-8 sm:py-4 sm:px-10 rounded-full text-center transition-all shadow-[0_15px_30px_-10px_rgba(45,212,191,0.4)] text-sm sm:text-base">
+                            応援・伴走プランを見る
                         </a>
-                        <a href="#contact" class="bg-transparent border border-slate-500 hover:border-white text-white font-medium py-3.5 px-10 rounded-md text-center transition-all">
+                        <a href="#contact" class="bg-white/5 border border-white/20 hover:bg-white/10 text-white font-bold py-3.5 px-8 sm:py-4 sm:px-10 rounded-full text-center transition-all text-sm sm:text-base">
                             まずは想いを聞かせてください
                         </a>
                     </div>
                 </div>
-                <div class="lg:w-2/5 hidden lg:block opacity-90">
+                <div class="lg:w-2/5 hidden lg:block">
                     <div class="relative w-full aspect-square flex items-center justify-center">
-                        <div class="absolute inset-0 border-2 border-brand-teal/30 rounded-[40px] animate-[pulse_4s_ease-in-out_infinite]"></div>
-                        <i class="fa-solid fa-box-open text-brand-teal text-8xl mb-4"></i>
+                        <div class="absolute inset-0 border-2 border-brand-teal/20 rounded-[60px] animate-[pulse_6s_ease-in-out_infinite]"></div>
+                        <div class="absolute inset-12 border border-white/5 rounded-[40px]"></div>
+                        <i class="fa-solid fa-box-open text-brand-teal text-[120px] drop-shadow-2xl opacity-80"></i>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- News Section (お知らせ) -->
-        <section id="news" class="py-16 bg-white border-b border-slate-100 relative">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4 border-b border-slate-200 pb-4">
-                    <h2 class="text-2xl font-bold text-brand-navy flex items-center">
-                        <i class="fa-solid fa-bullhorn text-brand-teal mr-3 text-xl"></i>お知らせ
+        <!-- News Section -->
+        <section id="news" class="py-12 sm:py-20 bg-white border-b border-slate-100 relative">
+            <div class="max-w-4xl mx-auto px-5 sm:px-8">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4 sm:gap-6 border-b border-slate-100 pb-4 sm:pb-6">
+                    <h2 class="text-xl sm:text-2xl font-bold text-brand-navy flex items-center tracking-tight">
+                        <i class="fa-solid fa-bullhorn text-brand-teal mr-3 sm:mr-4 text-lg sm:text-xl"></i>お知らせ
                     </h2>
-                    <span class="text-[11px] text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full font-medium tracking-wider flex items-center w-fit shadow-inner">
-                        <span class="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
-                        スプレッドシートと自動同期中
+                    <span class="text-[10px] text-slate-400 bg-slate-50 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-bold tracking-[0.1em] flex items-center w-fit uppercase">
+                        <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-400 mr-2 sm:mr-2.5 animate-pulse"></span>
+                        Spreadsheet Sync
                     </span>
                 </div>
                 
-                <div id="news-container" class="space-y-1">
-                    <div class="text-center py-12 text-slate-400 text-sm flex flex-col items-center">
-                        <i class="fa-solid fa-circle-notch fa-spin text-3xl text-brand-teal/50 mb-4"></i>
-                        <span>お知らせを読み込んでいます...</span>
+                <div id="news-container" class="space-y-0">
+                    <div class="text-center py-12 sm:py-16 text-slate-400 text-sm flex flex-col items-center">
+                        <i class="fa-solid fa-circle-notch fa-spin text-2xl sm:text-3xl text-brand-teal/30 mb-4 sm:mb-5"></i>
+                        <span class="font-medium tracking-widest uppercase text-[10px]">Loading Updates...</span>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Concept Section -->
-        <section id="concept" class="py-24 bg-white relative">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl font-bold mb-8 text-brand-navy">何にでもなれる、あなたのための「空箱」</h2>
-                <div class="w-16 h-1 bg-brand-teal mx-auto mb-10"></div>
+        <section id="concept" class="py-16 sm:py-28 bg-white relative">
+            <div class="max-w-4xl mx-auto px-5 sm:px-8 text-center">
+                <h2 class="text-2xl sm:text-3xl font-black mb-6 sm:mb-8 text-brand-navy tracking-tight">
+                    <span class="phrase">自分の足で稼ぐ人のための</span><span class="phrase">「器」です。</span>
+                </h2>
+                <div class="w-16 sm:w-20 h-1 sm:h-1.5 bg-brand-teal mx-auto mb-10 sm:mb-12 rounded-full"></div>
                 
-                <p class="text-lg text-slate-600 mb-6 leading-relaxed text-center">
-                    「会社の看板」だけではなく、「あなた自身の誠実さ」を伝えたい営業担当者の方。<br>これから事業を始める個人事業主の方。
-                </p>
-                <p class="text-lg text-slate-600 mb-12 leading-relaxed text-left md:text-center">
-                    エアーボックス（Airbox）は、あらかじめ機能が決まった「箱」ではありません。余計なものを削ぎ落とした「空っぽの器」だからこそ、お客様の想いに合わせてどんな形にもなれるのです。
-                </p>
+                <div class="max-w-3xl mx-auto space-y-6 sm:space-y-8">
+                    <p class="text-[15px] sm:text-[17px] text-slate-600 leading-[1.8] font-medium text-left sm:text-center">
+                        <span class="phrase">「Web上で一気に認知を拡大したい」</span><br class="hidden sm:block">
+                        <span class="phrase">もしそうお考えなら、</span><span class="phrase">高額な費用をかけて</span><span class="phrase">専門のWeb集客サービスを</span><span class="phrase">利用すべきです。</span><span class="phrase">Airboxはそのような目的には</span><span class="phrase">向いていません。</span>
+                    </p>
+                    <p class="text-[15px] sm:text-[17px] text-brand-navy font-bold leading-[1.8] text-left sm:text-center bg-slate-50 p-6 rounded-2xl">
+                        <span class="phrase">だからこそ、私たちが対象としているのは、</span><br class="hidden sm:block">
+                        <span class="phrase">「自分の足で稼がないといけない、</span><span class="phrase">これから人脈を作ろうとしている営業担当者」や</span><br class="hidden sm:block">
+                        <span class="phrase">「独立して間もない方」です。</span>
+                    </p>
+                    <p class="text-[15px] sm:text-[17px] text-slate-600 leading-[1.8] font-medium text-left sm:text-center">
+                        <span class="phrase">会社の看板だけでは語り尽くせない</span><span class="phrase">「あなた自身の誠実さ」を、</span><span class="phrase">目の前のお客様に伝えること。</span><span class="phrase">Airboxは、そのための</span><span class="phrase">『信頼の受け皿（デジタル名刺）』に</span><span class="phrase">特化した空箱です。</span>
+                    </p>
+                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 shadow-sm hover:border-brand-teal/30 transition-all">
-                        <h3 class="font-bold text-xl text-brand-navy mb-4 flex items-center">
-                            <i class="fa-solid fa-wind text-brand-teal mr-3"></i>不純物を排除する
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            誰も読まない長いページや、高額な維持費。そんな「泥水」を全て排除しました。パッと見て「あなたが誰で、何をしてくれるのか」が伝わる看板を提供します。
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 mt-12 sm:mt-20 text-left">
+                    <div class="bg-slate-50 p-6 sm:p-10 rounded-[24px] sm:rounded-[32px] border border-slate-100/50 shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl sm:rounded-2xl flex items-center justify-center shadow-sm mb-4 sm:mb-6">
+                            <i class="fa-solid fa-wind text-brand-teal text-lg sm:text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg sm:text-xl text-brand-navy mb-3 sm:mb-4">不純物を、削ぎ落とす</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed font-medium">
+                            誰も読まない長いページや高額な維持費。そんな「泥水」を排除しました。一目で「あなたが誰か」が伝わる看板を提供します。
                         </p>
                     </div>
-                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 shadow-sm hover:border-brand-teal/30 transition-all">
-                        <h3 class="font-bold text-xl text-brand-navy mb-4 flex items-center">
-                            <i class="fa-solid fa-heart text-brand-teal mr-3"></i>想いを形にする「伴走者」
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            単に作るだけではありません。あなたが普段大切にしている熱量をヒアリングし、第三者に伝わる優しい言葉へと一緒に整えていきます。
+                    <div class="bg-slate-50 p-6 sm:p-10 rounded-[24px] sm:rounded-[32px] border border-slate-100/50 shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl sm:rounded-2xl flex items-center justify-center shadow-sm mb-4 sm:mb-6">
+                            <i class="fa-solid fa-heart text-brand-teal text-lg sm:text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg sm:text-xl text-brand-navy mb-3 sm:mb-4">想いの伴走者になる</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed font-medium">
+                            単に作るだけではありません。大切にしている熱量をヒアリングし、第三者に伝わる優しい言葉へと整えていきます。
                         </p>
                     </div>
                 </div>
@@ -158,55 +234,55 @@
         </section>
 
         <!-- Features -->
-        <section id="features" class="py-24 bg-brand-navy text-white">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold mb-4 text-brand-teal">Google無料ツールを使い倒すハック</h2>
-                    <p class="text-slate-300">専用システムを持たず、既存インフラを繋ぎ合わせることで一生続くコストを「ゼロ」にします。</p>
+        <section id="features" class="py-16 sm:py-24 bg-brand-navy text-white">
+            <div class="max-w-6xl mx-auto px-5 sm:px-8">
+                <div class="text-center mb-12 sm:mb-16">
+                    <h2 class="text-2xl sm:text-3xl font-black mb-4 text-brand-teal">Google無料ツールを使い倒すハック</h2>
+                    <p class="text-sm sm:text-base text-slate-300 font-medium">専用システムを持たず、既存インフラを繋ぎ合わせることで一生続くコストを「ゼロ」にします。</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
-                    <div class="space-y-6">
-                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 text-left">
+                    <div class="space-y-4 sm:space-y-6">
+                        <h3 class="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 flex items-center">
                             <i class="fa-solid fa-circle-check text-brand-teal mr-3"></i>Airboxが「提供すること」
                         </h3>
-                        <div class="bg-white/5 p-6 rounded-xl border border-white/10">
-                            <div class="flex items-center gap-4 mb-3">
-                                <i class="fa-solid fa-server text-blue-400 text-2xl"></i>
-                                <h4 class="font-bold text-lg text-white">維持費0円のインフラ構築</h4>
+                        <div class="bg-white/5 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/10">
+                            <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                                <i class="fa-solid fa-server text-blue-400 text-xl sm:text-2xl"></i>
+                                <h4 class="font-bold text-base sm:text-lg text-white">維持費0円のインフラ構築</h4>
                             </div>
-                            <p class="text-sm text-slate-300">Google Sites等の無料プラットフォームを活用。レンタルサーバー代やドメイン更新料の心配を一生不要にします。</p>
+                            <p class="text-sm text-slate-300 leading-relaxed">Google Sites等の無料プラットフォームを活用。レンタルサーバー代やドメイン更新料の心配を一生不要にします。</p>
                         </div>
-                        <div class="bg-white/5 p-6 rounded-xl border border-white/10">
-                            <div class="flex items-center gap-4 mb-3">
-                                <i class="fa-solid fa-table-list text-green-400 text-2xl"></i>
-                                <h4 class="font-bold text-lg text-white">スプレッドシートでお知らせ更新</h4>
+                        <div class="bg-white/5 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/10">
+                            <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                                <i class="fa-solid fa-table-list text-green-400 text-xl sm:text-2xl"></i>
+                                <h4 class="font-bold text-base sm:text-lg text-white">スプレッドシートでお知らせ更新</h4>
                             </div>
-                            <p class="text-sm text-slate-300">複雑な管理画面は不要。あなたが表計算シートに入力するだけで、HPのお知らせが自動更新される仕組みを作ります。</p>
+                            <p class="text-sm text-slate-300 leading-relaxed">複雑な管理画面は不要。あなたが表計算シートに入力するだけで、HPのお知らせが自動更新される仕組みを作ります。</p>
                         </div>
-                        <div class="bg-white/5 p-6 rounded-xl border border-white/10">
-                            <div class="flex items-center gap-4 mb-3">
-                                <i class="fa-solid fa-envelope-open-text text-purple-400 text-2xl"></i>
-                                <h4 class="font-bold text-lg text-white">Googleフォームで直接連絡</h4>
+                        <div class="bg-white/5 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/10">
+                            <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                                <i class="fa-solid fa-envelope-open-text text-purple-400 text-xl sm:text-2xl"></i>
+                                <h4 class="font-bold text-base sm:text-lg text-white">Googleフォームで直接連絡</h4>
                             </div>
-                            <p class="text-sm text-slate-300">お問い合わせはGoogleフォームと連携。お客様からの連絡は、あなたのスマホへダイレクトに届きます。</p>
+                            <p class="text-sm text-slate-300 leading-relaxed">お問い合わせはGoogleフォームと連携。お客様からの連絡は、あなたのスマホへダイレクトに届きます。</p>
                         </div>
                     </div>
 
-                    <div class="space-y-6">
-                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <div class="space-y-4 sm:space-y-6 mt-4 md:mt-0">
+                        <h3 class="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 flex items-center">
                             <i class="fa-solid fa-circle-xmark text-red-400 mr-3"></i>あえて「やらないこと」
                         </h3>
-                        <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                        <p class="text-sm text-slate-400 mb-4 sm:mb-6 leading-relaxed">
                             「想いを形にし、維持費をゼロにする」ために、私たちは以下の重荷を削ぎ落としています。
                         </p>
-                        <div class="bg-red-500/5 p-6 rounded-xl border border-red-500/20">
-                            <h4 class="font-bold text-red-300 mb-1">× 検索上位表示（SEO）対策</h4>
-                            <p class="text-sm text-slate-400">「検索で見つけてもらう」のではなく、名刺やURLから「あなたの想いを確認してもらう」ための信頼の看板（受け皿）として割り切ります。</p>
+                        <div class="bg-red-500/5 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-red-500/20">
+                            <h4 class="font-bold text-red-300 mb-2">× 検索上位表示（SEO）対策</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">「検索で見つけてもらう」のではなく、名刺やURLから「あなたの想いを確認してもらう」ための信頼の看板（受け皿）として割り切ります。</p>
                         </div>
-                        <div class="bg-red-500/5 p-6 rounded-xl border border-red-500/20">
-                            <h4 class="font-bold text-red-300 mb-1">× 独自の高度なシステム開発</h4>
-                            <p class="text-sm text-slate-400">会員機能などの独自開発は行いません。その分、身軽で壊れない「箱」を最短で提供します。</p>
+                        <div class="bg-red-500/5 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-red-500/20">
+                            <h4 class="font-bold text-red-300 mb-2">× 独自の高度なシステム開発</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">会員機能などの独自開発は行いません。その分、身軽で壊れない「箱」を最短で提供します。</p>
                         </div>
                     </div>
                 </div>
@@ -214,79 +290,106 @@
         </section>
 
         <!-- Pricing Section -->
-        <section id="pricing" class="py-24 bg-slate-50">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-brand-navy mb-4 text-center">透明でシンプルな料金体系</h2>
-                    <div class="w-16 h-1 bg-brand-teal mx-auto mb-6"></div>
-                    <p class="text-slate-600 text-center">サーバー代は無料。あとはあなたに必要な「サポート」を選ぶだけです。</p>
+        <section id="pricing" class="py-16 sm:py-28 bg-slate-50">
+            <div class="max-w-6xl mx-auto px-5 sm:px-8">
+                <div class="text-center mb-12 sm:mb-20">
+                    <h2 class="text-2xl sm:text-3xl font-black text-brand-navy mb-4 sm:mb-5 tracking-tight">共に成長する、伴走料金プラン</h2>
+                    <div class="w-16 sm:w-20 h-1 sm:h-1.5 bg-brand-teal mx-auto mb-6 sm:mb-8 rounded-full"></div>
+                    <p class="text-sm sm:text-base text-slate-600 font-medium max-w-2xl mx-auto">
+                        <span class="phrase">独立直後の苦しい時期は</span><span class="phrase">最小限の負担で。</span><span class="phrase">あなたの事業が成長していくのに合わせて</span><span class="phrase">適正価格へ移行する</span><span class="phrase">「応援・出世払い」のモデルです。</span>
+                    </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto text-left items-stretch">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto text-left items-stretch">
                     <!-- インフラ費 -->
-                    <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-md flex flex-col relative">
-                        <div class="absolute top-0 right-0 bg-slate-100 text-slate-500 font-bold px-4 py-1.5 rounded-bl-xl text-[10px] uppercase tracking-widest">
+                    <div class="price-card bg-white rounded-[24px] sm:rounded-[32px] p-6 sm:p-10 border border-slate-200 shadow-sm flex flex-col relative">
+                        <div class="absolute top-0 right-0 bg-slate-100 text-slate-500 font-bold px-3 py-1 sm:px-4 sm:py-1.5 rounded-bl-2xl text-[9px] sm:text-[10px] uppercase tracking-widest">
                             Infrastructure
                         </div>
-                        <h3 class="text-lg font-bold text-brand-navy mb-1">サーバー・ドメイン代</h3>
-                        <p class="text-slate-500 text-xs mb-6">サイトを置くための場所代</p>
-                        <div class="flex items-baseline mb-6">
-                            <span class="text-5xl font-extrabold text-brand-navy">¥0</span>
-                            <span class="text-sm text-slate-500 ml-2 font-bold">/ 永年無料</span>
+                        <div class="mb-6 sm:mb-8 mt-2 sm:mt-0">
+                            <h3 class="text-base sm:text-lg font-bold text-brand-navy mb-1 sm:mb-2">場所代</h3>
+                            <p class="text-slate-400 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">Server / Domain</p>
                         </div>
-                        <p class="text-xs text-slate-500 leading-relaxed mt-auto">
-                            Googleの無料インフラを活用するため、一般的な制作会社で毎月かかる固定費は一生不要です。
+                        <div class="flex items-baseline mb-6 sm:mb-8">
+                            <span class="text-4xl sm:text-6xl font-black text-brand-navy">¥0</span>
+                            <span class="text-[11px] sm:text-xs text-slate-400 ml-2 sm:ml-3 font-bold">/ 永年無料</span>
+                        </div>
+                        <p class="text-[13px] sm:text-sm text-slate-500 leading-relaxed font-medium mt-auto">
+                            Googleの無料枠をハックするため、毎月のサーバー代やドメイン代は一生かかりません。
                         </p>
                     </div>
 
-                    <!-- 保守サポート（月額500円） -->
-                    <div class="bg-white rounded-2xl p-8 border-2 border-brand-teal shadow-xl flex flex-col relative transform md:-translate-y-4">
-                        <div class="absolute top-0 right-0 bg-brand-teal text-brand-navy font-bold px-4 py-1.5 rounded-bl-xl text-xs uppercase tracking-widest">
-                            Recommended
+                    <!-- 保守サポート -->
+                    <div class="price-card bg-white rounded-[24px] sm:rounded-[32px] p-6 sm:p-10 border-2 border-brand-teal shadow-[0_15px_30px_rgba(45,212,191,0.15)] flex flex-col relative transform md:-translate-y-6 mt-4 md:mt-0">
+                        <div class="absolute -top-3.5 sm:-top-4 left-1/2 -translate-x-1/2 bg-brand-teal text-brand-navy font-black px-4 py-1 sm:px-6 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] uppercase tracking-widest shadow-md whitespace-nowrap">
+                            Step-up Support
                         </div>
-                        <h3 class="text-xl font-bold text-brand-navy mb-1">保守サポート（伴走）</h3>
-                        <p class="text-slate-500 text-xs mb-6">定期的な更新や、ITのちょっとした相談に</p>
-                        <div class="flex items-baseline mb-6">
-                            <span class="text-5xl font-extrabold text-brand-navy">¥500</span>
-                            <span class="text-sm text-slate-500 ml-2 font-bold">/ 月</span>
+                        <div class="mb-4 mt-3 sm:mt-0">
+                            <h3 class="text-lg sm:text-xl font-bold text-brand-navy mb-1 sm:mb-2">保守（伴走）</h3>
+                            <p class="text-slate-400 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">Support</p>
                         </div>
-                        <ul class="text-xs text-slate-600 space-y-3 mb-6 flex-grow">
-                            <li class="flex items-start"><i class="fa-solid fa-check text-brand-teal mr-2 mt-0.5"></i> 月1回までのテキスト・画像変更</li>
-                            <li class="flex items-start"><i class="fa-solid fa-check text-brand-teal mr-2 mt-0.5"></i> スプレッドシート操作のサポート</li>
-                            <li class="flex items-start"><i class="fa-solid fa-check text-brand-teal mr-2 mt-0.5"></i> いつでも解約可能（縛りなし）</li>
+                        
+                        <div class="bg-slate-50 rounded-xl p-4 mb-6 border border-slate-100">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-bold text-slate-500">1年目 (応援価格)</span>
+                                <span class="text-xl font-black text-brand-teal">¥500<span class="text-[10px] text-slate-400 ml-1 font-normal">/月</span></span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-bold text-slate-500">2年目</span>
+                                <span class="text-lg font-black text-brand-navy">¥1,000<span class="text-[10px] text-slate-400 ml-1 font-normal">/月</span></span>
+                            </div>
+                            <div class="flex justify-between items-center pt-2 border-t border-slate-200">
+                                <span class="text-xs font-bold text-slate-500">3年目以降</span>
+                                <span class="text-sm font-black text-brand-navy tracking-tight">毎年＋¥500 更新</span>
+                            </div>
+                        </div>
+
+                        <ul class="text-[12px] sm:text-[13px] text-slate-600 space-y-2 mb-6 flex-grow font-medium">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-check text-brand-teal mr-2 mt-0.5"></i> 月1回までの更新作業</li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-check text-brand-teal mr-2 mt-0.5"></i> ITまわりの相談窓口</li>
                         </ul>
-                        <div class="pt-4 border-t border-slate-100 mt-auto">
-                            <p class="text-xs text-brand-navy font-bold leading-relaxed">
-                                ITが苦手な方でも安心。ワンコインで頼れる専門家がつく「お守り」プランです。
+                        <div class="pt-4 border-t border-slate-50">
+                            <p class="text-[11px] sm:text-xs text-brand-navy font-bold leading-relaxed text-center">
+                                「安いから」ではなく、価値を感じて共に歩むための上限なしの伴走プランです。
                             </p>
                         </div>
                     </div>
 
-                    <!-- スポット修正（1回3000円） -->
-                    <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-md flex flex-col relative">
-                        <div class="absolute top-0 right-0 bg-slate-100 text-slate-500 font-bold px-4 py-1.5 rounded-bl-xl text-[10px] uppercase tracking-widest">
+                    <!-- スポット修正 -->
+                    <div class="price-card bg-slate-100/50 rounded-[24px] sm:rounded-[32px] p-6 sm:p-10 border border-slate-200/50 flex flex-col relative mt-4 md:mt-0">
+                        <div class="absolute top-0 right-0 bg-slate-100 text-slate-400 font-bold px-3 py-1 sm:px-4 sm:py-1.5 rounded-bl-2xl text-[9px] sm:text-[10px] uppercase tracking-widest">
                             One-time
                         </div>
-                        <h3 class="text-lg font-bold text-brand-navy mb-1">スポット修正</h3>
-                        <p class="text-slate-500 text-xs mb-6">保守サポート未加入時の単発依頼</p>
-                        <div class="flex items-baseline mb-6">
-                            <span class="text-4xl font-extrabold text-brand-navy">¥3,000</span>
-                            <span class="text-sm text-slate-500 ml-2 font-bold">/ 1回</span>
+                        <div class="mb-6 sm:mb-8 mt-2 sm:mt-0 opacity-70">
+                            <h3 class="text-base sm:text-lg font-bold text-brand-navy mb-1 sm:mb-2">単発修正</h3>
+                            <p class="text-slate-400 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">Spot Work</p>
                         </div>
-                        <p class="text-xs text-slate-500 leading-relaxed mt-auto font-bold text-brand-navy">
-                            ※修正頻度が高い場合は、月額500円の「保守サポート」へのご加入が圧倒的にお得になります。
+                        <div class="flex items-baseline mb-6 sm:mb-8 opacity-80">
+                            <span class="text-3xl sm:text-5xl font-black text-brand-navy tracking-tighter">¥3,000</span>
+                            <span class="text-[11px] sm:text-xs text-slate-400 ml-2 font-bold">/ 1回</span>
+                        </div>
+                        <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed mt-auto font-medium">
+                            サポート未加入時の作業費用です。修正頻度が高い場合は、月額の伴走プランが圧倒的にお得です。
                         </p>
                     </div>
 
-                    <!-- 初期制作費：上限5000円への修正 -->
-                    <div class="md:col-span-3 bg-slate-100 rounded-2xl p-8 border border-slate-200 flex flex-col md:flex-row items-center justify-between mt-4">
-                        <div>
-                            <h3 class="font-bold text-brand-navy text-xl mb-2"><i class="fa-solid fa-wand-magic-sparkles text-brand-teal mr-2"></i> 初期制作費（ヒアリング・構築）</h3>
-                            <p class="text-sm text-slate-600 leading-relaxed">あなたの想いの言語化から、Web上での形作り、Googleツール連携までの初期セットアップ費用です。</p>
+                    <!-- 初期制作費 -->
+                    <div class="md:col-span-3 bg-brand-navy rounded-[24px] sm:rounded-[40px] p-6 sm:p-10 md:p-14 text-white flex flex-col md:flex-row items-center justify-between mt-4 sm:mt-8 shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-brand-teal opacity-5 rounded-full -mr-24 -mt-24 sm:-mr-32 sm:-mt-32"></div>
+                        <div class="relative z-10 text-center md:text-left mb-6 md:mb-0 w-full md:w-auto">
+                            <h3 class="font-bold text-xl sm:text-2xl mb-3 sm:mb-4 flex items-center justify-center md:justify-start nowrap-sm">
+                                <i class="fa-solid fa-wand-magic-sparkles text-brand-teal mr-3 sm:mr-4"></i> 初期制作費
+                            </h3>
+                            <p class="text-slate-400 text-xs sm:text-sm max-w-lg leading-relaxed font-medium mx-auto md:mx-0">
+                                想いの言語化から構築まで、あなた専用の「空箱」を仕立てます。<br class="hidden md:block">
+                                簡単な構成であれば1,000円からお作りいたします。
+                            </p>
                         </div>
-                        <div class="mt-6 md:mt-0 text-right">
-                            <div class="text-3xl font-extrabold text-brand-navy">¥1,000 〜 ¥5,000</div>
-                            <p class="text-xs text-slate-500 mt-1 font-bold">※簡単な構成であれば1,000円で作成いたします。</p>
+                        <div class="relative z-10 text-center md:text-right w-full md:w-auto flex-shrink-0">
+                            <div class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter mb-2 whitespace-nowrap">
+                                <span class="text-2xl sm:text-3xl md:text-4xl">¥</span>1,000 <span class="text-lg sm:text-2xl mx-1 text-slate-400 font-normal">〜</span> <span class="text-2xl sm:text-3xl md:text-4xl">¥</span>5,000
+                            </div>
+                            <p class="text-[9px] sm:text-[11px] text-brand-teal font-bold tracking-widest uppercase">One-time payment only</p>
                         </div>
                     </div>
                 </div>
@@ -294,63 +397,69 @@
         </section>
 
         <!-- Self-Proof Section -->
-        <section class="py-16 bg-brand-teal/10 border-y border-brand-teal/20">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <i class="fa-solid fa-lightbulb text-4xl text-brand-teal mb-4"></i>
-                <h3 class="text-2xl font-bold text-brand-navy mb-4">ちなみに、今ご覧のこのサイトも維持費「0円」です。</h3>
-                <p class="text-slate-600 text-base leading-relaxed max-w-2xl mx-auto">
-                    説得力を持たせるため、Airboxの公式サイト自体も、お客様に提供する仕組みと全く同じ構成（サーバー代無料）で運用しています。<br>
-                    維持費ゼロでも、これだけ美しく、表示速度の速いサイト（空箱）が作れるという証明です。
+        <section class="py-12 sm:py-16 bg-brand-teal/10 border-y border-brand-teal/20">
+            <div class="max-w-4xl mx-auto px-5 sm:px-8 text-center">
+                <i class="fa-solid fa-lightbulb text-3xl sm:text-4xl text-brand-teal mb-3 sm:mb-4"></i>
+                <h3 class="text-xl sm:text-2xl font-bold text-brand-navy mb-3 sm:mb-4">ちなみに、このサイトも維持費「0円」です。</h3>
+                <p class="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto font-medium">
+                    <span class="phrase">Airboxの公式サイト自体も、</span><span class="phrase">お客様に提供する仕組みと全く同じ構成（サーバー代無料）で</span><span class="phrase">運用しています。</span><br class="hidden sm:block">
+                    <span class="phrase">維持費ゼロでも、</span><span class="phrase">これだけサクサク動くサイトが作れるという</span><span class="phrase">証明です。</span>
                 </p>
             </div>
         </section>
 
         <!-- Profile Section -->
-        <section id="profile" class="py-24 bg-white">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- md:items-center で写真を垂直方向の真ん中に配置 -->
-                <div class="bg-brand-navy rounded-[40px] shadow-2xl flex flex-col md:flex-row profile-shadow border border-white/10 p-10 md:p-16 gap-10 md:gap-16 items-center md:items-center overflow-hidden relative">
+        <section id="profile" class="py-16 sm:py-24 lg:py-32 bg-white">
+            <div class="max-w-5xl mx-auto px-5 sm:px-8">
+                <div class="bg-brand-navy rounded-[32px] md:rounded-[60px] shadow-2xl flex flex-col md:flex-row profile-shadow border border-white/5 p-8 sm:p-12 md:p-20 gap-8 sm:gap-12 md:gap-20 items-center overflow-hidden relative">
                     
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-brand-teal opacity-[0.03] rounded-full -mr-32 -mt-32"></div>
+                    <div class="absolute top-0 right-0 w-64 sm:w-80 h-64 sm:h-80 bg-brand-teal opacity-[0.03] rounded-full -mr-32 sm:-mr-40 -mt-32 sm:-mt-40"></div>
+                    <div class="absolute bottom-0 left-0 w-32 sm:w-40 h-32 sm:h-40 bg-brand-teal opacity-[0.02] rounded-full -ml-16 sm:-ml-20 -mb-16 sm:-mb-20"></div>
 
-                    <!-- 代表プロフィール写真 (垂直方向の真ん中に) -->
-                    <div class="w-48 h-48 md:w-56 md:h-56 flex-shrink-0 relative">
+                    <div class="w-40 h-40 sm:w-48 sm:h-48 md:w-64 md:h-64 flex-shrink-0 relative group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-brand-teal to-blue-500 rounded-full blur-xl sm:blur-2xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
                         <img src="profile.jpg" 
                              alt="阪本貴史 プロフィール" 
-                             class="w-full h-full object-cover rounded-full border-4 border-brand-teal/30 shadow-[0_0_40px_rgba(45,212,191,0.15)] relative z-10"
+                             class="w-full h-full object-cover rounded-full border-4 sm:border-[6px] border-white/10 shadow-2xl relative z-10"
                              onerror="this.style.display='none'; document.getElementById('preview-fallback').style.display='flex';">
-                        <div id="preview-fallback" class="hidden absolute inset-0 flex-col items-center justify-center bg-slate-800 text-brand-teal rounded-full border-4 border-brand-teal/30 shadow-inner z-10">
-                            <i class="fa-solid fa-user-tie text-5xl mb-2 opacity-70"></i>
-                            <span class="text-[10px] font-bold tracking-wide text-center leading-tight">画像<br>準備中</span>
+                        <div id="preview-fallback" class="hidden absolute inset-0 flex-col items-center justify-center bg-slate-800 text-brand-teal rounded-full border-4 border-white/10 shadow-inner z-10">
+                            <i class="fa-solid fa-user-tie text-4xl sm:text-6xl mb-2 sm:mb-3 opacity-50"></i>
+                            <span class="text-[8px] sm:text-[10px] font-black tracking-widest uppercase opacity-70 text-center leading-tight">Image<br>Pending</span>
                         </div>
                     </div>
 
-                    <!-- プロフィールテキスト -->
                     <div class="flex-grow text-white flex flex-col justify-center text-center md:text-left relative z-20">
-                        <div class="inline-block px-4 py-1 bg-brand-teal text-brand-navy text-xs font-bold rounded-full mb-6 w-fit mx-auto md:mx-0 uppercase tracking-wider">
-                            Founder / Partner
+                        <div class="inline-block px-4 py-1.5 sm:px-5 sm:py-2 bg-white/5 text-brand-teal text-[9px] sm:text-[10px] font-black rounded-full mb-4 sm:mb-8 w-fit mx-auto md:mx-0 uppercase tracking-[0.2em] sm:tracking-[0.3em] border border-white/10">
+                            The Strategist
                         </div>
-                        <h2 class="text-3xl md:text-4xl font-bold mb-3">阪本 貴史 <span class="text-lg font-normal text-slate-400 ml-2 block md:inline mt-1 md:mt-0 font-sans tracking-normal">Takafumi Sakamoto</span></h2>
-                        <p class="text-brand-teal font-medium mb-8 italic text-base md:text-lg md:border-l-2 md:border-brand-teal md:pl-4">民間医療法人 経営企画部にて勤務</p>
-                        
-                        <div class="space-y-6 text-slate-300 text-sm md:text-base leading-relaxed text-left max-w-2xl">
-                            <p>
-                                本業では医療法人の経営企画として、日々複雑な組織の課題と向き合っています。「誰もが思いを持って働いている」——私はそう信じていますが、その熱量が仕組みの壁に阻まれ、伝わっていないケースを数多く見てきました。
-                            </p>
-                            <p>
-                                この「複雑なものを削ぎ落とし、個人の熱量をシンプルに伝える」というスキルと、Googleツールを繋ぐハックは、個人のデジタル名刺制作において最高の相性だと確信しています。
-                            </p>
-                            <p>
-                                「ITは苦手」という方も、ご安心ください。あなたの仕事への想いを一緒に見つけ出し、最高の一枚の「空箱」に仕上げる伴走者として、丁寧にサポートいたします。
-                            </p>
+                        <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-3 sm:mb-4 tracking-tighter">阪本 貴史</h2>
+                        <div class="flex flex-col md:flex-row md:items-center gap-1 sm:gap-2 md:gap-6 mb-6 sm:mb-10">
+                            <span class="text-slate-400 font-medium tracking-widest text-xs sm:text-sm uppercase">Takafumi Sakamoto</span>
+                            <div class="hidden md:block w-px h-4 bg-white/20"></div>
+                            <p class="text-brand-teal font-bold text-sm sm:text-base md:text-lg mt-1 md:mt-0">民間医療法人 経営企画部にて勤務</p>
                         </div>
                         
-                        <div class="mt-10 flex flex-wrap justify-center md:justify-start gap-4">
-                            <a href="https://x.com/2022AIRBOX" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white/10 hover:bg-brand-teal hover:text-brand-navy text-white rounded-xl transition-all border border-white/20 text-sm font-bold shadow-sm group">
-                                <i class="fa-brands fa-x-twitter group-hover:scale-110 transition-transform"></i> X (Twitter)
+                        <div class="space-y-4 sm:space-y-6 text-slate-300 text-[13px] sm:text-[15px] md:text-base leading-[1.8] sm:leading-[2] font-medium max-w-xl text-left">
+                            <p>
+                                <span class="phrase">医療法人の経営企画として、</span><span class="phrase">日々シビアな数字と組織の課題に</span><span class="phrase">向き合っています。</span><span class="phrase">誰もが仕事に想いを持って</span><span class="phrase">働いているはずなのに、</span><span class="phrase">その熱量が届かずに</span><span class="phrase">商品や概要だけを見て</span><span class="phrase">撃沈する姿や、</span><span class="phrase">伝わっていない現実を</span><span class="phrase">数多く見てきました。</span>
+                            </p>
+                            <p class="text-brand-teal font-bold border-l-2 border-brand-teal/50 pl-3">
+                                <span class="phrase">契約後にどのように関わってくれるかが</span><span class="phrase">一番重要なのに...</span>
+                            </p>
+                            <p>
+                                <span class="phrase">「複雑なものを削ぎ落とし、</span><span class="phrase">個人の熱量をシンプルに伝える」——</span><span class="phrase">このスキルと、Googleツールを繋ぐハックは、</span><span class="phrase">個人のデジタル名刺制作において</span><span class="phrase">最高の相性だと確信しています。</span>
+                            </p>
+                            <p>
+                                <span class="phrase">ITへの苦手意識がある方も</span><span class="phrase">ご安心ください。</span><span class="phrase">あなたの誠実さを一緒に見つけ出し、</span><span class="phrase">最高の「空箱」を仕立てる</span><span class="phrase">伴走者として、</span><span class="phrase">丁寧にサポートいたします。</span>
+                            </p>
+                        </div>
+                        
+                        <div class="mt-8 sm:mt-12 flex flex-wrap justify-center md:justify-start gap-3 sm:gap-5">
+                            <a href="https://x.com/2022AIRBOX" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-3 px-6 py-2.5 sm:px-8 sm:py-3 bg-white/5 hover:bg-brand-teal hover:text-brand-navy text-white rounded-full transition-all border border-white/10 text-[11px] sm:text-xs font-bold shadow-sm group">
+                                <i class="fa-brands fa-x-twitter group-hover:scale-125 transition-transform text-sm"></i> X (Twitter)
                             </a>
-                            <a href="https://note.com/gay_iguana46taka" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white/10 hover:bg-brand-teal hover:text-brand-navy text-white rounded-xl transition-all border border-white/20 text-sm font-bold shadow-sm group">
-                                <i class="fa-solid fa-book-open group-hover:scale-110 transition-transform"></i> note
+                            <a href="https://note.com/gay_iguana46taka" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-3 px-6 py-2.5 sm:px-8 sm:py-3 bg-white/5 hover:bg-brand-teal hover:text-brand-navy text-white rounded-full transition-all border border-white/10 text-[11px] sm:text-xs font-bold shadow-sm group">
+                                <i class="fa-solid fa-book-open group-hover:scale-125 transition-transform text-sm"></i> note
                             </a>
                         </div>
                     </div>
@@ -358,26 +467,60 @@
             </div>
         </section>
 
+        <!-- Message Section -->
+        <section class="py-16 sm:py-24 bg-slate-50 border-t border-slate-200 relative overflow-hidden">
+            <div class="max-w-3xl mx-auto px-5 sm:px-8 text-center relative z-10">
+                <i class="fa-solid fa-quote-left text-4xl sm:text-5xl text-brand-teal/40 mb-8"></i>
+                <h2 class="text-2xl sm:text-3xl font-black text-brand-navy mb-8 sm:mb-10 leading-tight tracking-tighter">
+                    <span class="phrase">一緒に小さな成功体験を</span><br class="sm:hidden"><span class="phrase">分かち合いたいから。</span>
+                </h2>
+                <div class="text-[15px] sm:text-[17px] text-slate-600 leading-[2] font-medium space-y-6 sm:space-y-8 text-left sm:text-center">
+                    <p>
+                        <span class="phrase">想いを言語化することは、</span><span class="phrase">成長した自身の状態を</span><span class="phrase">イメージすることです。</span><br>
+                        <span class="phrase">明確なイメージを持つと、</span><span class="phrase">人は成長しやすくなり、</span><span class="phrase">自身で必要なことに</span><span class="phrase">気づきやすくなります。</span><br>
+                        <span class="phrase">私は、そういった瞬間に関わりたい。</span><span class="phrase">それこそがこのサービスを提供する</span><span class="phrase">私の役割であり、価値だと信じています。</span>
+                    </p>
+                    <p>
+                        <span class="phrase">だからこそ、</span><span class="phrase">「安いからいいや」で居座ったり、</span><span class="phrase">「ただの付き合いだから」という関係は</span><span class="phrase">望んでいません。</span>
+                    </p>
+                    <p>
+                        <span class="phrase">しかし、あなたが成長を実感して</span><span class="phrase">価値を感じ、</span><span class="phrase text-brand-navy font-bold border-b-2 border-brand-teal/50">「もっと一緒に頑張りたい」</span><span class="phrase">と思ってくれる限り、</span><span class="phrase">私は上限なくあなたに伴走し続けます。</span><br>
+                        <span class="phrase">頑張っている人と関わり続け、</span><span class="phrase">一緒に小さな成功体験を</span><span class="phrase">分かち合うことこそが、</span><span class="phrase">私の生き甲斐だからです。</span>
+                    </p>
+                    <p class="font-bold text-brand-navy bg-white p-8 sm:p-10 rounded-[32px] shadow-sm border border-slate-100 mt-12 text-center text-lg sm:text-xl leading-relaxed">
+                        <span class="phrase">もし、いつか私から卒業して、</span><br class="hidden sm:block"><span class="phrase">この場所に価値を</span><span class="phrase">感じていただけていたら。</span><br>
+                        <span class="phrase">ぜひ、あなたの周りの後輩や</span><span class="phrase">頑張っている仲間に、</span><br class="hidden sm:block"><span class="phrase">同じように寄り添ってあげてください。</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
         <!-- CTA Section -->
-        <section id="contact" class="py-24 bg-gradient-to-br from-brand-teal to-blue-600 text-white text-center relative overflow-hidden">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]"></div>
-            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                <h2 class="text-3xl md:text-5xl font-bold mb-8 leading-tight">あなたの「想い」を、<br>聞かせてください。</h2>
-                <p class="text-xl text-teal-50 mb-12 leading-relaxed">
-                    「名刺代わりにこんなページを作れないか？」「まずは相談だけでもいいか？」<br>
-                    まずは一度、フランクにお話ししましょう。
-                </p>
+        <section id="contact" class="py-20 sm:py-32 bg-gradient-to-br from-brand-navy to-slate-900 text-white text-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyIvPjwvc3ZnPg==')]"></div>
+            <div class="max-w-4xl mx-auto px-5 sm:px-6 relative z-10 text-center">
+                <h2 class="text-2xl sm:text-3xl md:text-5xl font-black mb-6 sm:mb-10 leading-[1.4] sm:leading-[1.3] tracking-tighter">
+                    <span class="phrase">あなたについて、</span><br><span class="phrase">教えてください。</span>
+                </h2>
+                <div class="text-sm sm:text-base md:text-lg text-slate-300 mb-10 sm:mb-16 leading-relaxed sm:leading-loose max-w-2xl mx-auto font-medium space-y-6">
+                    <p class="text-left sm:text-center">
+                        <span class="phrase">「名刺代わりのページを作ってみたい」</span><span class="phrase">「何から話せばいいか分からない」</span><br class="hidden sm:block">
+                        <span class="phrase">それで構いません。</span><span class="phrase">まずは一度、フランクにお話ししましょう。</span><br>
+                        <span class="phrase text-brand-teal font-bold tracking-wide mt-2">もちろん費用は発生しません。あなたについて教えて下さい。</span>
+                    </p>
+                </div>
                 
-                <div class="bg-white/10 p-10 md:p-16 rounded-3xl backdrop-blur-md border border-white/20">
-                    <i class="fa-brands fa-google text-5xl mb-8"></i>
-                    <h3 class="text-2xl font-bold mb-6">お問い合わせ（Googleフォームへ）</h3>
-                    <p class="text-base text-teal-100 mb-10 leading-relaxed text-center">
-                        Airbox自身も維持費を極限まで抑えるため、高額なメールシステムは使用せず<br class="hidden md:block">Googleフォームを利用して皆様からのご連絡を承っております。
+                <div class="bg-white/5 p-8 sm:p-12 md:p-20 rounded-[40px] sm:rounded-[60px] backdrop-blur-md border border-white/5 relative group">
+                    <div class="absolute inset-0 bg-brand-teal opacity-0 group-hover:opacity-[0.02] transition-opacity duration-700"></div>
+                    <i class="fa-brands fa-google text-5xl sm:text-6xl text-brand-teal mb-6 sm:mb-10"></i>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">無料相談フォーム</h3>
+                    <p class="text-xs sm:text-sm text-slate-400 mb-8 sm:mb-12 leading-relaxed max-w-sm mx-auto">
+                        Airbox自身も維持費を極限まで抑えるため、Googleフォームを利用してご連絡を承っております。
                     </p>
                     
-                    <a href="https://forms.gle/gFdePuY9pSXqd2wY6" target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center gap-3 w-full md:w-auto bg-white hover:bg-slate-100 text-brand-navy font-bold py-5 px-14 rounded-2xl transition-all shadow-xl text-xl active:scale-95">
-                        <i class="fa-solid fa-arrow-up-right-from-square text-brand-teal"></i>
-                        無料相談フォームを開く
+                    <a href="https://forms.gle/gFdePuY9pSXqd2wY6" target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center gap-3 sm:gap-4 w-full sm:w-auto bg-brand-teal hover:bg-teal-400 text-brand-navy font-black py-4 px-10 sm:py-5 sm:px-16 rounded-full transition-all shadow-[0_10px_20px_rgba(45,212,191,0.3)] text-base sm:text-lg active:scale-95">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        相談してみる
                     </a>
                 </div>
             </div>
@@ -385,21 +528,21 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-500 py-20 text-center border-t border-slate-800">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <div class="flex items-center justify-center gap-3 mb-8">
-                <i class="fa-solid fa-box-open text-brand-teal text-2xl"></i>
-                <span class="font-bold text-2xl tracking-tight text-white">Airbox</span>
+    <footer class="bg-slate-900 text-slate-500 py-16 sm:py-24 text-center border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="flex items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-10">
+                <i class="fa-solid fa-box-open text-brand-teal text-xl sm:text-2xl"></i>
+                <span class="font-bold text-xl sm:text-2xl tracking-tighter text-white">Airbox</span>
             </div>
-            <p class="text-sm mb-12 tracking-[0.2em] uppercase font-medium">Simple Box, Pure Passion.</p>
-            <div class="text-xs tracking-widest opacity-60">
+            <p class="text-[9px] sm:text-[10px] mb-10 sm:mb-14 tracking-[0.3em] sm:tracking-[0.4em] uppercase font-black text-slate-600">Pure Passion / Zero Infrastructure</p>
+            <div class="text-[9px] sm:text-[10px] tracking-widest opacity-40 uppercase">
                 &copy; 2026 Airbox / Takafumi Sakamoto. All rights reserved.
             </div>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling for anchor links
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -416,18 +559,16 @@
         // Header scroll behavior
         const header = document.querySelector('header');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                header.classList.add('shadow-md');
-                header.classList.remove('bg-white/95');
-                header.classList.add('bg-white');
+            if (window.scrollY > 30) {
+                header.classList.add('shadow-xl', 'bg-white');
+                header.classList.remove('glass-nav');
             } else {
-                header.classList.remove('shadow-md');
-                header.classList.remove('bg-white');
-                header.classList.add('bg-white/95');
+                header.classList.remove('shadow-xl', 'bg-white');
+                header.classList.add('glass-nav');
             }
         });
 
-        // スプレッドシート連動スクリプト
+        // Spreadsheet Sync Script
         document.addEventListener('DOMContentLoaded', () => {
             const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_F1Mbeih7N70lLgH1Nd2wnerpvwzkZevMJS81U1wQ5y-KkVo3-i2q2YxrC6HcaoWyxgRVXQAa77w/pub?output=csv';
             const container = document.getElementById('news-container');
@@ -439,7 +580,7 @@
                     const dataRows = rows.slice(1).filter(row => row.length >= 3 && row[0].trim() !== '');
 
                     if (dataRows.length === 0) {
-                        container.innerHTML = '<div class="text-center py-8 text-slate-500 text-sm border-b border-slate-50">現在、新しいお知らせはありません。</div>';
+                        container.innerHTML = '<div class="text-center py-10 sm:py-12 text-slate-400 text-xs sm:text-sm italic">No updates available at this moment.</div>';
                         return;
                     }
 
@@ -451,46 +592,44 @@
                         const content = row[2] || '';
                         const url = row[3] ? row[3].trim() : '';
 
-                        let catStyle = 'bg-slate-50 text-slate-600 border border-slate-200';
+                        let catStyle = 'bg-slate-100 text-slate-500 border border-slate-200';
                         const catLower = category.trim().toLowerCase();
-                        if (catLower === 'new') catStyle = 'bg-teal-50 text-teal-700 border border-teal-200';
-                        if (catLower.includes('press') || catLower.includes('公式') || catLower.includes('重要')) catStyle = 'bg-blue-50 text-blue-700 border border-blue-200';
+                        if (catLower === 'new') catStyle = 'bg-teal-50 text-teal-600 border border-teal-200/50';
+                        if (catLower.includes('press') || catLower.includes('公式') || catLower.includes('重要')) catStyle = 'bg-[#e2e8f0] text-[#475569]';
                         
                         if (url) {
                             const isPdf = url.toLowerCase().endsWith('.pdf');
-                            const linkIcon = isPdf ? '<i class="fa-solid fa-file-pdf"></i>' : '<i class="fa-solid fa-arrow-right"></i>';
-                            const linkText = isPdf ? 'PDFを開く' : '詳細を見る';
-                            const linkColor = isPdf ? 'text-blue-600' : 'text-brand-teal';
+                            const linkIcon = isPdf ? '<i class="fa-solid fa-file-pdf"></i>' : '<i class="fa-solid fa-chevron-right"></i>';
+                            const linkColor = isPdf ? 'text-blue-600' : 'text-slate-300 group-hover:text-brand-teal';
 
                             container.innerHTML += `
-                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="block py-5 border-b border-slate-100 hover:bg-slate-50/80 transition-all duration-300 group">
-                                    <div class="flex flex-col md:flex-row md:items-start gap-3 md:gap-8 px-2 md:px-4">
-                                        <div class="flex items-center gap-4 md:w-64 flex-shrink-0 pt-0.5">
-                                            <span class="text-sm text-slate-400 font-mono tracking-tight">${date}</span>
-                                            <span class="text-[10px] ${catStyle} font-bold px-2.5 py-1 rounded uppercase tracking-wider whitespace-nowrap shadow-sm">${category}</span>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="block py-4 sm:py-5 border-b border-slate-100 hover:bg-slate-50/50 transition-colors px-2 group">
+                                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
+                                        <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-48 flex-shrink-0">
+                                            <span class="text-xs sm:text-sm text-slate-500 font-mono tracking-tight">${date}</span>
+                                            <span class="text-[10px] sm:text-[11px] ${catStyle} font-bold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded whitespace-nowrap">${category}</span>
                                         </div>
-                                        <div class="flex-grow">
-                                            <p class="text-sm text-slate-700 font-medium leading-relaxed group-hover:text-brand-navy transition-colors">
+                                        <div class="flex-grow flex justify-between items-center mt-1 sm:mt-0">
+                                            <p class="text-[13px] sm:text-[15px] text-slate-700 font-medium leading-relaxed group-hover:text-brand-teal transition-colors">
                                                 ${content}
                                             </p>
-                                        </div>
-                                        <div class="mt-2 md:mt-0 flex items-center justify-end md:justify-start ${linkColor} text-xs font-bold opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
-                                            <span class="mr-2">${linkText}</span>
-                                            ${linkIcon}
+                                            <span class="${linkColor} text-xs sm:text-sm ml-3 sm:ml-4 opacity-50 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                                                ${linkIcon}
+                                            </span>
                                         </div>
                                     </div>
                                 </a>
                             `;
                         } else {
                             container.innerHTML += `
-                                <div class="block py-5 border-b border-slate-100 hover:bg-slate-50/50 transition-colors px-2 md:px-4">
-                                    <div class="flex flex-col md:flex-row md:items-start gap-3 md:gap-8">
-                                        <div class="flex items-center gap-4 md:w-64 flex-shrink-0 pt-0.5">
-                                            <span class="text-sm text-slate-400 font-mono tracking-tight">${date}</span>
-                                            <span class="text-[10px] ${catStyle} font-bold px-2.5 py-1 rounded uppercase tracking-wider whitespace-nowrap shadow-sm">${category}</span>
+                                <div class="block py-4 sm:py-5 border-b border-slate-100 px-2">
+                                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
+                                        <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-48 flex-shrink-0">
+                                            <span class="text-xs sm:text-sm text-slate-500 font-mono tracking-tight">${date}</span>
+                                            <span class="text-[10px] sm:text-[11px] ${catStyle} font-bold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded whitespace-nowrap">${category}</span>
                                         </div>
-                                        <div class="flex-grow">
-                                            <p class="text-sm text-slate-700 font-medium leading-relaxed">
+                                        <div class="flex-grow mt-1 sm:mt-0">
+                                            <p class="text-[13px] sm:text-[15px] text-slate-700 font-medium leading-relaxed">
                                                 ${content}
                                             </p>
                                         </div>
@@ -501,7 +640,7 @@
                     });
                 })
                 .catch(error => {
-                    container.innerHTML = '<div class="text-center py-8 text-red-400 text-sm border-b border-slate-50">お知らせの読み込みに失敗しました。</div>';
+                    container.innerHTML = '<div class="text-center py-10 text-red-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest">Update sync failed.</div>';
                 });
 
             function parseCSV(text) {
