@@ -105,6 +105,24 @@
         /* ▼ 横スクロールバーを隠すハック（実績セクション用） ▼ */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* ▼ 汎用アコーディオンのアニメーション（FAQや機能説明で使用） ▼ */
+        .accordion-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.open {
+            max-height: 500px; /* 十分な高さを確保 */
+            opacity: 1;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-btn[aria-expanded="true"] .accordion-icon {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
@@ -123,6 +141,7 @@
                     <a href="#works" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">制作実績</a>
                     <a href="#features" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">仕組み</a>
                     <a href="#pricing" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">料金</a>
+                    <a href="#faq" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">よくある質問</a>
                     <a href="#profile" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">伴走者</a>
                 </nav>
                 <div>
@@ -267,49 +286,47 @@
                     <i class="fa-solid fa-arrows-left-right"></i> スワイプして見る
                 </div>
 
-                <!-- ▼ 運用イメージの案内パネル ▼ -->
-                <div class="mt-12 sm:mt-16 bg-white p-6 sm:p-10 rounded-[24px] border border-brand-teal/20 shadow-sm relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 bg-brand-teal/5 rounded-full -mr-16 -mt-16 sm:-mr-24 sm:-mt-24"></div>
-                    <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 sm:gap-10">
-                        <div class="md:w-1/3 text-center md:text-left">
-                            <div class="inline-block px-3 py-1 bg-brand-teal/10 text-brand-teal text-[10px] font-bold rounded-full mb-3 tracking-widest uppercase">
+                <!-- ▼ 運用イメージの案内パネル（画像ベースの美しい縦型カードへ復元） ▼ -->
+                <div class="mt-12 sm:mt-16 bg-white p-6 sm:p-10 rounded-[32px] border border-slate-100 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 bg-brand-teal/5 rounded-full -mr-16 -mt-16 sm:-mr-24 sm:-mt-24 pointer-events-none"></div>
+                    <div class="relative z-10 flex flex-col md:flex-row items-stretch gap-8 sm:gap-10">
+                        <div class="md:w-5/12 flex flex-col justify-center text-center md:text-left">
+                            <div class="inline-block px-3 py-1 bg-teal-50 text-teal-500 text-[10px] font-bold rounded-full mb-4 tracking-widest uppercase w-fit mx-auto md:mx-0">
                                 Easy Operation
                             </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-brand-navy mb-3 leading-snug">
+                            <h3 class="text-xl sm:text-2xl font-bold text-brand-navy mb-4 leading-snug tracking-tight">
                                 更新はスマホから<br>文字を打つだけ。
                             </h3>
-                            <p class="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">
+                            <p class="text-[13px] sm:text-sm text-slate-500 font-medium leading-relaxed">
                                 専門知識や管理画面は一切不要。<br class="hidden md:block">維持費0円のまま、一生自分で簡単に運用できる仕組みをお渡しします。
                             </p>
                         </div>
-                        <div class="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex items-start gap-4 hover:border-brand-teal/30 transition-colors">
-                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
-                                    <i class="fa-solid fa-table-list text-green-500 text-lg"></i>
+                        <div class="md:w-7/12 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 w-full">
+                            <!-- カード1 -->
+                            <div class="bg-slate-50/70 p-6 sm:p-8 rounded-[24px] border border-slate-100 hover:shadow-md hover:border-brand-teal/30 transition-all flex flex-col items-start h-full">
+                                <div class="w-12 h-12 bg-white rounded-2xl border border-slate-100 flex items-center justify-center shadow-sm mb-5">
+                                    <i class="fa-solid fa-table-list text-green-500 text-xl"></i>
                                 </div>
-                                <div>
-                                    <h4 class="font-bold text-sm text-brand-navy mb-1.5">スプレッドシート連携</h4>
-                                    <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed">お知らせや実績は、専用のGoogleスプレッドシート（Excel）に入力するだけで自動更新されます。</p>
-                                </div>
+                                <h4 class="font-bold text-[15px] sm:text-base text-brand-navy mb-2.5">スプレッドシート連携</h4>
+                                <p class="text-xs text-slate-500 leading-relaxed font-medium">お知らせや実績は、専用のGoogleスプレッドシート（Excel）に入力するだけで自動更新されます。</p>
                             </div>
-                            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex items-start gap-4 hover:border-brand-teal/30 transition-colors">
-                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
-                                    <i class="fa-brands fa-google text-blue-500 text-lg"></i>
+                            <!-- カード2 -->
+                            <div class="bg-slate-50/70 p-6 sm:p-8 rounded-[24px] border border-slate-100 hover:shadow-md hover:border-brand-teal/30 transition-all flex flex-col items-start h-full">
+                                <div class="w-12 h-12 bg-white rounded-2xl border border-slate-100 flex items-center justify-center shadow-sm mb-5">
+                                    <i class="fa-brands fa-google text-blue-500 text-xl"></i>
                                 </div>
-                                <div>
-                                    <h4 class="font-bold text-sm text-brand-navy mb-1.5">Googleフォーム連携</h4>
-                                    <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed">お問い合わせはGoogleフォームで受付。高額なシステムは不要で、あなたのスマホに直接通知が届きます。</p>
-                                </div>
+                                <h4 class="font-bold text-[15px] sm:text-base text-brand-navy mb-2.5">Googleフォーム連携</h4>
+                                <p class="text-xs text-slate-500 leading-relaxed font-medium">お問い合わせはGoogleフォームで受付。高額なシステムは不要で、あなたのスマホに直接通知が届きます。</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- ▲ ここまで追加 ▲ -->
+                <!-- ▲ ここまで追加・復元 ▲ -->
 
             </div>
         </section>
 
-        <!-- Features -->
+        <!-- Features (アコーディオン化によるスリム化) -->
         <section id="features" class="py-16 sm:py-24 bg-brand-navy text-white">
             <div class="max-w-6xl mx-auto px-5 sm:px-8">
                 <div class="text-center mb-12 sm:mb-16">
@@ -318,47 +335,100 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 text-left">
-                    <div class="space-y-4 sm:space-y-6">
+                    <div class="space-y-4">
                         <h3 class="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 flex items-center">
                             <i class="fa-solid fa-circle-check text-brand-teal mr-3"></i>Airboxが「提供すること」
                         </h3>
-                        <div class="bg-white/5 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/10">
-                            <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                                <i class="fa-solid fa-server text-blue-400 text-xl sm:text-2xl"></i>
-                                <h4 class="font-bold text-base sm:text-lg text-white">維持費0円のインフラ構築</h4>
+                        
+                        <div class="space-y-3">
+                            <!-- アコーディオン項目 1 -->
+                            <div class="border border-white/10 rounded-2xl bg-white/5 overflow-hidden transition-colors">
+                                <button class="accordion-btn w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center focus:outline-none" aria-expanded="false">
+                                    <div class="flex items-center gap-3 sm:gap-4">
+                                        <i class="fa-solid fa-server text-blue-400 text-lg"></i>
+                                        <h4 class="font-bold text-sm sm:text-base text-white">維持費0円のインフラ構築</h4>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-down text-slate-400 accordion-icon flex-shrink-0 text-xs transition-transform"></i>
+                                </button>
+                                <div class="accordion-content bg-white/5 px-5 sm:px-6">
+                                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed pb-5 font-medium border-t border-white/10 pt-4 mt-1">
+                                        Google Sites等の無料プラットフォームを活用。レンタルサーバー代やドメイン更新料の心配を一生不要にします。
+                                    </p>
+                                </div>
                             </div>
-                            <p class="text-sm text-slate-300 leading-relaxed">Google Sites等の無料プラットフォームを活用。レンタルサーバー代やドメイン更新料の心配を一生不要にします。</p>
-                        </div>
-                        <div class="bg-white/5 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/10">
-                            <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                                <i class="fa-solid fa-table-list text-green-400 text-xl sm:text-2xl"></i>
-                                <h4 class="font-bold text-base sm:text-lg text-white">スプレッドシートでお知らせ更新</h4>
+                            
+                            <!-- アコーディオン項目 2 -->
+                            <div class="border border-white/10 rounded-2xl bg-white/5 overflow-hidden transition-colors">
+                                <button class="accordion-btn w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center focus:outline-none" aria-expanded="false">
+                                    <div class="flex items-center gap-3 sm:gap-4">
+                                        <i class="fa-solid fa-table-list text-green-400 text-lg"></i>
+                                        <h4 class="font-bold text-sm sm:text-base text-white">スプレッドシートでお知らせ更新</h4>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-down text-slate-400 accordion-icon flex-shrink-0 text-xs transition-transform"></i>
+                                </button>
+                                <div class="accordion-content bg-white/5 px-5 sm:px-6">
+                                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed pb-5 font-medium border-t border-white/10 pt-4 mt-1">
+                                        複雑な管理画面は不要。あなたが表計算シートに入力するだけで、HPのお知らせが自動更新される仕組みを作ります。
+                                    </p>
+                                </div>
                             </div>
-                            <p class="text-sm text-slate-300 leading-relaxed">複雑な管理画面は不要。あなたが表計算シートに入力するだけで、HPのお知らせが自動更新される仕組みを作ります。</p>
-                        </div>
-                        <div class="bg-white/5 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/10">
-                            <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                                <i class="fa-solid fa-envelope-open-text text-purple-400 text-xl sm:text-2xl"></i>
-                                <h4 class="font-bold text-base sm:text-lg text-white">Googleフォームで直接連絡</h4>
+
+                            <!-- アコーディオン項目 3 -->
+                            <div class="border border-white/10 rounded-2xl bg-white/5 overflow-hidden transition-colors">
+                                <button class="accordion-btn w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center focus:outline-none" aria-expanded="false">
+                                    <div class="flex items-center gap-3 sm:gap-4">
+                                        <i class="fa-solid fa-envelope-open-text text-purple-400 text-lg"></i>
+                                        <h4 class="font-bold text-sm sm:text-base text-white">Googleフォームで直接連絡</h4>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-down text-slate-400 accordion-icon flex-shrink-0 text-xs transition-transform"></i>
+                                </button>
+                                <div class="accordion-content bg-white/5 px-5 sm:px-6">
+                                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed pb-5 font-medium border-t border-white/10 pt-4 mt-1">
+                                        お問い合わせはGoogleフォームと連携。お客様からの連絡は、あなたのスマホへダイレクトに届きます。
+                                    </p>
+                                </div>
                             </div>
-                            <p class="text-sm text-slate-300 leading-relaxed">お問い合わせはGoogleフォームと連携。お客様からの連絡は、あなたのスマホへダイレクトに届きます。</p>
                         </div>
                     </div>
 
-                    <div class="space-y-4 sm:space-y-6 mt-4 md:mt-0">
+                    <div class="space-y-4 mt-8 md:mt-0">
                         <h3 class="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 flex items-center">
                             <i class="fa-solid fa-circle-xmark text-red-400 mr-3"></i>あえて「やらないこと」
                         </h3>
-                        <p class="text-sm text-slate-400 mb-4 sm:mb-6 leading-relaxed">
+                        <p class="text-xs sm:text-sm text-slate-400 mb-4 sm:mb-6 leading-relaxed">
                             「想いを形にし、維持費をゼロにする」ために、私たちは以下の重荷を削ぎ落としています。
                         </p>
-                        <div class="bg-red-500/5 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-red-500/20">
-                            <h4 class="font-bold text-red-300 mb-2">× 検索上位表示（SEO）対策</h4>
-                            <p class="text-sm text-slate-400 leading-relaxed">「検索で見つけてもらう」のではなく、名刺やURLから「あなたの想いを確認してもらう」ための信頼の看板（受け皿）として割り切ります。</p>
-                        </div>
-                        <div class="bg-red-500/5 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-red-500/20">
-                            <h4 class="font-bold text-red-300 mb-2">× 独自の高度なシステム開発</h4>
-                            <p class="text-sm text-slate-400 leading-relaxed">会員機能などの独自開発は行いません。その分、身軽で壊れない「箱」を最短で提供します。</p>
+                        
+                        <div class="space-y-3">
+                            <!-- アコーディオン項目 4 -->
+                            <div class="border border-red-500/20 rounded-2xl bg-red-500/5 overflow-hidden transition-colors">
+                                <button class="accordion-btn w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center focus:outline-none" aria-expanded="false">
+                                    <div class="flex items-center gap-3">
+                                        <h4 class="font-bold text-sm sm:text-base text-red-300">× 検索上位表示（SEO）対策</h4>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-down text-red-400/50 accordion-icon flex-shrink-0 text-xs transition-transform"></i>
+                                </button>
+                                <div class="accordion-content bg-red-500/5 px-5 sm:px-6">
+                                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed pb-5 font-medium border-t border-red-500/10 pt-4 mt-1">
+                                        「検索で見つけてもらう」のではなく、名刺やURLから「あなたの想いを確認してもらう」ための信頼の看板（受け皿）として割り切ります。
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- アコーディオン項目 5 -->
+                            <div class="border border-red-500/20 rounded-2xl bg-red-500/5 overflow-hidden transition-colors">
+                                <button class="accordion-btn w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center focus:outline-none" aria-expanded="false">
+                                    <div class="flex items-center gap-3">
+                                        <h4 class="font-bold text-sm sm:text-base text-red-300">× 独自の高度なシステム開発</h4>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-down text-red-400/50 accordion-icon flex-shrink-0 text-xs transition-transform"></i>
+                                </button>
+                                <div class="accordion-content bg-red-500/5 px-5 sm:px-6">
+                                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed pb-5 font-medium border-t border-red-500/10 pt-4 mt-1">
+                                        会員機能などの独自開発は行いません。その分、身軽で壊れない「箱」を最短で提供します。
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -499,10 +569,9 @@
                              class="w-full h-full object-cover rounded-full border-4 sm:border-[6px] border-white/10 shadow-2xl relative z-10"
                              onerror="this.style.display='none'; document.getElementById('preview-fallback').style.display='flex';">
                         
-                        <!-- ▼ 万が一画像が読み込めなかった際の予備表示（Pendingを排除し、Airboxロゴに変更） ▼ -->
+                        <!-- ▼ 万が一画像が読み込めなかった際の予備表示（ロゴから人型アイコンへ変更） ▼ -->
                         <div id="preview-fallback" class="hidden absolute inset-0 flex-col items-center justify-center bg-slate-800 text-brand-teal rounded-full border-4 border-white/10 shadow-inner z-10">
-                            <i class="fa-solid fa-box-open text-4xl sm:text-6xl mb-2 sm:mb-3 opacity-50"></i>
-                            <span class="text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase opacity-70 text-center leading-tight">Airbox</span>
+                            <i class="fa-solid fa-user-tie text-5xl sm:text-7xl opacity-50"></i>
                         </div>
                     </div>
 
@@ -569,6 +638,27 @@
                         <span class="phrase">もし、いつか私から卒業して、</span><br class="hidden sm:block"><span class="phrase">この場所に価値を</span><span class="phrase">感じていただけていたら。</span><br>
                         <span class="phrase">ぜひ、あなたの周りの後輩や</span><span class="phrase">頑張っている仲間に、</span><br class="hidden sm:block"><span class="phrase">同じように寄り添ってあげてください。</span>
                     </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section (動的生成・アコーディオン形式・最下部へ移動) -->
+        <section id="faq" class="py-16 sm:py-24 bg-white border-t border-slate-100 relative">
+            <div class="max-w-3xl mx-auto px-5 sm:px-8">
+                <div class="text-center mb-10 sm:mb-14">
+                    <h2 class="text-xl sm:text-2xl font-black text-brand-navy mb-3 tracking-tight">よくあるご質問（FAQ）</h2>
+                    <span class="text-[9px] sm:text-[10px] text-slate-400 bg-slate-50 px-3 py-1.5 rounded-full font-bold tracking-widest uppercase border border-slate-200 inline-block mb-4">
+                        Spreadsheet Sync
+                    </span>
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium">ご依頼前に感じる不安や疑問に、包み隠さずお答えします。</p>
+                </div>
+
+                <div id="faq-container" class="space-y-3 sm:space-y-4">
+                    <!-- Javascriptでここにデータが挿入され、アコーディオンが構築されます -->
+                    <div class="text-center py-8 text-slate-400 text-sm flex flex-col items-center">
+                        <i class="fa-solid fa-circle-notch fa-spin text-xl sm:text-2xl text-brand-teal/30 mb-3"></i>
+                        <span class="font-medium tracking-widest uppercase text-[10px]">Loading FAQ...</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -646,16 +736,34 @@
             }
         });
 
+        // 汎用アコーディオンロジック（イベント委譲：後から生成されるFAQにも対応）
+        document.addEventListener('click', (e) => {
+            const button = e.target.closest('.accordion-btn');
+            if (button) {
+                const expanded = button.getAttribute('aria-expanded') === 'true';
+                const content = button.nextElementSibling;
+                
+                button.setAttribute('aria-expanded', !expanded);
+                if (!expanded) {
+                    content.classList.add('open');
+                } else {
+                    content.classList.remove('open');
+                }
+            }
+        });
+
         // Spreadsheet Sync Script
         document.addEventListener('DOMContentLoaded', () => {
-            // ▼ スプレッドシートの公開CSV URLを設定（阪本様の実データに紐付け完了） ▼
+            // ▼ スプレッドシートの公開CSV URLを設定 ▼
             const newsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_F1Mbeih7N70lLgH1Nd2wnerpvwzkZevMJS81U1wQ5y-KkVo3-i2q2YxrC6HcaoWyxgRVXQAa77w/pub?gid=1919595398&single=true&output=csv'; // お知らせ用
             const worksCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_F1Mbeih7N70lLgH1Nd2wnerpvwzkZevMJS81U1wQ5y-KkVo3-i2q2YxrC6HcaoWyxgRVXQAa77w/pub?gid=1166573943&single=true&output=csv'; // 制作実績用
+            const faqCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_F1Mbeih7N70lLgH1Nd2wnerpvwzkZevMJS81U1wQ5y-KkVo3-i2q2YxrC6HcaoWyxgRVXQAa77w/pub?gid=475020799&single=true&output=csv'; // FAQ用
             
             const container = document.getElementById('news-container');
             const worksContainer = document.getElementById('works-container');
+            const faqContainer = document.getElementById('faq-container');
 
-            // 制作実績のダミーデータ（スプレッドシート未設定時の表示用）
+            // 制作実績のダミーデータ
             const dummyWorksData = [
                 {
                     title: "新人営業担当向け ご挨拶サイト",
@@ -725,6 +833,63 @@
                     .catch(() => renderDummyWorks());
             } else {
                 setTimeout(renderDummyWorks, 500);
+            }
+
+            // --- FAQの描画処理（アコーディオン） ---
+            const dummyFaqData = [
+                {
+                    question: "「維持費0円」って本当ですか？後から高額な請求が来ませんか？",
+                    answer: "本当です。Googleが提供している無料のインフラ（Google Sites等）とスプレッドシートを繋ぎ合わせているため、いわゆる「レンタルサーバー代」や「ドメイン更新料」は一生かかりません。<br>お支払いいただくのは、制作時の「初期費用」と、あなたが伴走を希望される場合のみ発生する「サポート費」だけです。"
+                },
+                {
+                    question: "ITやパソコンが全く苦手なのですが、本当に自分で更新できますか？",
+                    answer: "ご安心ください。複雑な管理画面やコードを触る必要は一切ありません。<br>普段お使いのスマートフォンから、「LINEやExcelに文字を打ち込む感覚」で専用のシートに入力するだけで、サイトのお知らせや実績・FAQが自動的に更新されます。"
+                },
+                {
+                    question: "検索結果の1ページ目に出したい（SEO対策をしてほしい）のですが。",
+                    answer: "申し訳ありませんが、Airboxはそのような目的には向いていません。<br>私たちは「検索で見ず知らずの人を集める高度な機能」をあえて捨てることで、この価格と仕組みを実現しています。Airboxは、実際に出会ったお客様に対して「あなたの想いを深く伝える」ためのデジタル名刺としてご活用ください。"
+                },
+                {
+                    question: "途中でサポート（伴走プラン）を解約することはできますか？",
+                    answer: "はい、いつでも可能です。解約金や違約金なども一切かかりません。<br>Airboxは、お客様を「囲い込んで依存させる」モデルではなく、「自走」を支援するための環境です。ご自身で完全に運用できるようになった際は、喜んで送り出させていただきます。"
+                }
+            ];
+
+            function renderFaq(data) {
+                faqContainer.innerHTML = '';
+                data.forEach(item => {
+                    faqContainer.innerHTML += `
+                        <div class="border border-slate-200 rounded-xl bg-white overflow-hidden hover:border-brand-teal/50 transition-colors">
+                            <button class="accordion-btn w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center focus:outline-none" aria-expanded="false">
+                                <span class="font-bold text-brand-navy text-[14px] sm:text-[15px] pr-4 leading-snug"><span class="text-brand-teal mr-2 font-black">Q.</span>${item.question}</span>
+                                <i class="fa-solid fa-chevron-down text-slate-400 accordion-icon flex-shrink-0 text-sm"></i>
+                            </button>
+                            <div class="accordion-content bg-slate-50 px-5 sm:px-6">
+                                <p class="text-[13px] sm:text-sm text-slate-600 leading-relaxed pb-5 font-medium border-t border-slate-200/50 pt-4">
+                                    <span class="text-brand-navy font-black mr-2">A.</span>${item.answer}
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            if (faqCsvUrl) {
+                fetch(faqCsvUrl)
+                    .then(response => response.text())
+                    .then(csvText => {
+                        const rows = parseCSV(csvText);
+                        const dataRows = rows.slice(1).filter(row => row.length >= 2 && row[0].trim() !== '');
+                        if (dataRows.length > 0) {
+                            const faqData = dataRows.map(row => ({ question: row[0], answer: row[1] }));
+                            renderFaq(faqData);
+                        } else {
+                            renderFaq(dummyFaqData);
+                        }
+                    })
+                    .catch(() => renderFaq(dummyFaqData));
+            } else {
+                setTimeout(() => renderFaq(dummyFaqData), 500);
             }
 
             // --- お知らせの描画処理 ---
