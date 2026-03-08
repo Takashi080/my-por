@@ -101,6 +101,10 @@
         
         /* ▼ 文節折り返し用ハック（単語の途中での不自然な改行を防ぐ） ▼ */
         .phrase { display: inline-block; }
+
+        /* ▼ 横スクロールバーを隠すハック（実績セクション用） ▼ */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
@@ -116,6 +120,7 @@
                 <nav class="hidden lg:flex space-x-10">
                     <a href="#news" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">お知らせ</a>
                     <a href="#concept" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">コンセプト</a>
+                    <a href="#works" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">制作実績</a>
                     <a href="#features" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">仕組み</a>
                     <a href="#pricing" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">料金</a>
                     <a href="#profile" class="text-sm font-bold text-slate-600 hover:text-brand-teal transition-colors tracking-wider">伴走者</a>
@@ -230,6 +235,77 @@
                         </p>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Works Section (スプレッドシート連携による制作実績) -->
+        <section id="works" class="py-16 sm:py-24 bg-slate-50 border-t border-slate-100 overflow-hidden">
+            <div class="max-w-6xl mx-auto px-5 sm:px-8">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-12 gap-4">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-black text-brand-navy mb-3 tracking-tight">
+                            <span class="phrase">制作実績・</span><span class="phrase">サンプル</span>
+                        </h2>
+                        <p class="text-sm sm:text-base text-slate-600 font-medium">Airboxで作成した、お客様の想いが詰まった「デジタル名刺」たちです。</p>
+                    </div>
+                    <span class="text-[9px] sm:text-[10px] text-slate-400 bg-white px-3 py-1.5 rounded-full font-bold tracking-widest uppercase border border-slate-200 flex-shrink-0 w-fit">
+                        Spreadsheet Sync
+                    </span>
+                </div>
+
+                <!-- 横スクロール対応コンテナ（縦長防止） -->
+                <div id="works-container" class="flex overflow-x-auto pb-8 -mx-5 px-5 sm:mx-0 sm:px-0 gap-5 sm:gap-6 snap-x snap-mandatory hide-scrollbar">
+                    <!-- Javascriptでここにデータが挿入されます -->
+                    <div class="text-center py-12 text-slate-400 text-sm flex flex-col items-center w-full">
+                        <i class="fa-solid fa-circle-notch fa-spin text-2xl sm:text-3xl text-brand-teal/30 mb-4"></i>
+                        <span class="font-medium tracking-widest uppercase text-[10px]">Loading Portfolio...</span>
+                    </div>
+                </div>
+                
+                <!-- スクロールを促すヒント（スマホのみ表示） -->
+                <div class="text-center text-slate-400 text-xs sm:hidden mt-2 animate-pulse flex justify-center items-center gap-2">
+                    <i class="fa-solid fa-arrows-left-right"></i> スワイプして見る
+                </div>
+
+                <!-- ▼ 運用イメージの案内パネル（追加） ▼ -->
+                <div class="mt-12 sm:mt-16 bg-white p-6 sm:p-10 rounded-[24px] border border-brand-teal/20 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 bg-brand-teal/5 rounded-full -mr-16 -mt-16 sm:-mr-24 sm:-mt-24"></div>
+                    <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 sm:gap-10">
+                        <div class="md:w-1/3 text-center md:text-left">
+                            <div class="inline-block px-3 py-1 bg-brand-teal/10 text-brand-teal text-[10px] font-bold rounded-full mb-3 tracking-widest uppercase">
+                                Easy Operation
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-brand-navy mb-3 leading-snug">
+                                更新はスマホから<br>文字を打つだけ。
+                            </h3>
+                            <p class="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">
+                                専門知識や管理画面は一切不要。<br class="hidden md:block">維持費0円のまま、一生自分で簡単に運用できる仕組みをお渡しします。
+                            </p>
+                        </div>
+                        <div class="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex items-start gap-4 hover:border-brand-teal/30 transition-colors">
+                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
+                                    <i class="fa-solid fa-table-list text-green-500 text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-brand-navy mb-1.5">スプレッドシート連携</h4>
+                                    <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed">お知らせや実績は、専用のGoogleスプレッドシート（Excel）に入力するだけで自動更新されます。</p>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex items-start gap-4 hover:border-brand-teal/30 transition-colors">
+                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
+                                    <i class="fa-brands fa-google text-blue-500 text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-brand-navy mb-1.5">Googleフォーム連携</h4>
+                                    <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed">お問い合わせはGoogleフォームで受付。高額なシステムは不要で、あなたのスマホに直接通知が届きます。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ▲ ここまで追加 ▲ -->
+
             </div>
         </section>
 
@@ -570,10 +646,87 @@
 
         // Spreadsheet Sync Script
         document.addEventListener('DOMContentLoaded', () => {
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_F1Mbeih7N70lLgH1Nd2wnerpvwzkZevMJS81U1wQ5y-KkVo3-i2q2YxrC6HcaoWyxgRVXQAa77w/pub?output=csv';
+            // ▼ スプレッドシートの公開CSV URLを設定（阪本様の実データに紐付け完了） ▼
+            const newsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_F1Mbeih7N70lLgH1Nd2wnerpvwzkZevMJS81U1wQ5y-KkVo3-i2q2YxrC6HcaoWyxgRVXQAa77w/pub?gid=1919595398&single=true&output=csv'; // お知らせ用
+            const worksCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_F1Mbeih7N70lLgH1Nd2wnerpvwzkZevMJS81U1wQ5y-KkVo3-i2q2YxrC6HcaoWyxgRVXQAa77w/pub?gid=1166573943&single=true&output=csv'; // 制作実績用
+            
             const container = document.getElementById('news-container');
+            const worksContainer = document.getElementById('works-container');
 
-            fetch(csvUrl)
+            // 制作実績のダミーデータ（スプレッドシート未設定時の表示用）
+            const dummyWorksData = [
+                {
+                    title: "新人営業担当向け ご挨拶サイト",
+                    url: "https://takashi080.github.io/sample/",
+                    description: "実績やスキルではなく、ご本人の「誠実さ」と「熱意」を前面に押し出した、名刺代わりのご挨拶サイト構成です。"
+                },
+                {
+                    title: "異業種交流会 案内サイト",
+                    url: "https://takashi080.github.io/foryou/",
+                    description: "「誰のための場所か」という理念を言語化し、共感する仲間や参加者を募るためのコミュニティ向けサイト構成です。"
+                },
+                {
+                    title: "地域密着型 個人サロン様",
+                    url: "#",
+                    description: "毎月の予約状況やメニュー、休業日をスプレッドシートから簡単に更新できる、店舗用のシンプルな看板サイトです。"
+                },
+                {
+                    title: "一人親方・職人様向け",
+                    url: "#",
+                    description: "余計な言葉は削ぎ落とし、実際の施工実績の写真をメインに「腕の良さ」と「信頼感」をアピールする構成です。"
+                }
+            ];
+
+            // --- 制作実績の描画処理 ---
+            function createWorkCard(title, url, description) {
+                return `
+                    <a href="${url}" target="_blank" rel="noopener noreferrer" class="block w-[260px] sm:w-[300px] flex-shrink-0 snap-start group bg-white rounded-[24px] border border-slate-200 shadow-sm hover:shadow-lg hover:border-brand-teal/50 transition-all duration-300 flex flex-col relative p-6 sm:p-8">
+                        <div class="flex justify-between items-start mb-5">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-brand-teal group-hover:bg-brand-teal/10 transition-colors">
+                                <i class="fa-solid fa-laptop-code text-lg sm:text-xl"></i>
+                            </div>
+                            <div class="w-8 h-8 bg-white border border-slate-100 rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+                                <i class="fa-solid fa-arrow-up-right-from-square text-brand-teal text-xs"></i>
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-base sm:text-lg text-brand-navy mb-3 leading-snug group-hover:text-brand-teal transition-colors">${title}</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed font-medium mt-auto">${description}</p>
+                    </a>
+                `;
+            }
+
+            function renderDummyWorks() {
+                worksContainer.innerHTML = '';
+                dummyWorksData.forEach(work => {
+                    worksContainer.innerHTML += createWorkCard(work.title, work.url, work.description);
+                });
+            }
+
+            if (worksCsvUrl) {
+                fetch(worksCsvUrl)
+                    .then(response => response.text())
+                    .then(csvText => {
+                        const rows = parseCSV(csvText);
+                        const dataRows = rows.slice(1).filter(row => row.length >= 3 && row[0].trim() !== ''); // ヘッダーを飛ばす
+                        if (dataRows.length > 0) {
+                            worksContainer.innerHTML = '';
+                            dataRows.forEach(row => {
+                                const title = row[0] || '';
+                                const url = row[1] || '#';
+                                const desc = row[2] || '';
+                                worksContainer.innerHTML += createWorkCard(title, url, desc);
+                            });
+                        } else {
+                            renderDummyWorks();
+                        }
+                    })
+                    .catch(() => renderDummyWorks());
+            } else {
+                setTimeout(renderDummyWorks, 500);
+            }
+
+            // --- お知らせの描画処理 ---
+            fetch(newsCsvUrl)
                 .then(response => response.text())
                 .then(csvText => {
                     const rows = parseCSV(csvText);
