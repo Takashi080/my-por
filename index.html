@@ -135,7 +135,7 @@
         }
     </style>
 </head>
-<body class="antialiased flex flex-col min-h-screen">
+<body class="antialiased flex flex-col min-h-screen relative">
 
     <!-- Header -->
     <header class="glass-nav shadow-sm fixed w-full z-50 transition-all duration-300">
@@ -267,7 +267,7 @@
             </div>
         </section>
 
-        <!-- Works Section (スプレッドシート連携による制作実績) -->
+        <!-- Works Section -->
         <section id="works" class="py-16 sm:py-24 bg-slate-50 border-t border-slate-100 overflow-hidden">
             <div class="max-w-6xl mx-auto px-5 sm:px-8">
                 <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-12 gap-4">
@@ -282,21 +282,17 @@
                     </span>
                 </div>
 
-                <!-- 横スクロール対応コンテナ（縦長防止） -->
                 <div id="works-container" class="flex overflow-x-auto pb-8 -mx-5 px-5 sm:mx-0 sm:px-0 gap-5 sm:gap-6 snap-x snap-mandatory hide-scrollbar">
-                    <!-- Javascriptでここにデータが挿入されます -->
                     <div class="text-center py-12 text-slate-400 text-sm flex flex-col items-center w-full">
                         <i class="fa-solid fa-circle-notch fa-spin text-2xl sm:text-3xl text-brand-teal/30 mb-4"></i>
                         <span class="font-medium tracking-widest uppercase text-[10px]">Loading Portfolio...</span>
                     </div>
                 </div>
                 
-                <!-- スクロールを促すヒント（スマホのみ表示） -->
                 <div class="text-center text-slate-400 text-xs sm:hidden mt-2 animate-pulse flex justify-center items-center gap-2">
                     <i class="fa-solid fa-arrows-left-right"></i> スワイプして見る
                 </div>
 
-                <!-- ▼ 運用イメージの案内パネル（画像ベースの美しい縦型カードへ復元） ▼ -->
                 <div class="mt-12 sm:mt-16 bg-white p-6 sm:p-10 rounded-[32px] border border-slate-100 shadow-sm relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 bg-brand-teal/5 rounded-full -mr-16 -mt-16 sm:-mr-24 sm:-mt-24 pointer-events-none"></div>
                     <div class="relative z-10 flex flex-col md:flex-row items-stretch gap-8 sm:gap-10">
@@ -312,7 +308,6 @@
                             </p>
                         </div>
                         <div class="md:w-7/12 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 w-full">
-                            <!-- カード1 -->
                             <div class="bg-slate-50/70 p-6 sm:p-8 rounded-[24px] border border-slate-100 hover:shadow-md hover:border-brand-teal/30 transition-all flex flex-col items-start h-full">
                                 <div class="w-12 h-12 bg-white rounded-2xl border border-slate-100 flex items-center justify-center shadow-sm mb-5">
                                     <i class="fa-solid fa-table-list text-green-500 text-xl"></i>
@@ -320,7 +315,6 @@
                                 <h4 class="font-bold text-[15px] sm:text-base text-brand-navy mb-2.5">スプレッドシート連携</h4>
                                 <p class="text-xs text-slate-500 leading-relaxed font-medium">お知らせや実績は、専用のGoogleスプレッドシート（Excel）に入力するだけで自動更新されます。</p>
                             </div>
-                            <!-- カード2 -->
                             <div class="bg-slate-50/70 p-6 sm:p-8 rounded-[24px] border border-slate-100 hover:shadow-md hover:border-brand-teal/30 transition-all flex flex-col items-start h-full">
                                 <div class="w-12 h-12 bg-white rounded-2xl border border-slate-100 flex items-center justify-center shadow-sm mb-5">
                                     <i class="fa-brands fa-google text-blue-500 text-xl"></i>
@@ -331,12 +325,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- ▲ ここまで追加・復元 ▲ -->
 
             </div>
         </section>
 
-        <!-- Features (アコーディオン化によるスリム化) -->
+        <!-- Features -->
         <section id="features" class="py-16 sm:py-24 bg-brand-navy text-white">
             <div class="max-w-6xl mx-auto px-5 sm:px-8">
                 <div class="text-center mb-12 sm:mb-16">
@@ -351,7 +344,6 @@
                         </h3>
                         
                         <div class="space-y-3">
-                            <!-- アコーディオン項目 1 -->
                             <div class="border border-white/10 rounded-2xl bg-white/5 overflow-hidden transition-colors">
                                 <button class="accordion-btn w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center focus:outline-none" aria-expanded="false">
                                     <div class="flex items-center gap-3 sm:gap-4">
@@ -367,7 +359,6 @@
                                 </div>
                             </div>
                             
-                            <!-- アコーディオン項目 2 -->
                             <div class="border border-white/10 rounded-2xl bg-white/5 overflow-hidden transition-colors">
                                 <button class="accordion-btn w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center focus:outline-none" aria-expanded="false">
                                     <div class="flex items-center gap-3 sm:gap-4">
@@ -383,7 +374,6 @@
                                 </div>
                             </div>
 
-                            <!-- アコーディオン項目 3 -->
                             <div class="border border-white/10 rounded-2xl bg-white/5 overflow-hidden transition-colors">
                                 <button class="accordion-btn w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center focus:outline-none" aria-expanded="false">
                                     <div class="flex items-center gap-3 sm:gap-4">
@@ -410,7 +400,6 @@
                         </p>
                         
                         <div class="space-y-3">
-                            <!-- アコーディオン項目 4 -->
                             <div class="border border-red-500/20 rounded-2xl bg-red-500/5 overflow-hidden transition-colors">
                                 <button class="accordion-btn w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center focus:outline-none" aria-expanded="false">
                                     <div class="flex items-center gap-3">
@@ -425,7 +414,6 @@
                                 </div>
                             </div>
                             
-                            <!-- アコーディオン項目 5 -->
                             <div class="border border-red-500/20 rounded-2xl bg-red-500/5 overflow-hidden transition-colors">
                                 <button class="accordion-btn w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center focus:outline-none" aria-expanded="false">
                                     <div class="flex items-center gap-3">
@@ -579,7 +567,7 @@
                              class="w-full h-full object-cover rounded-full border-4 sm:border-[6px] border-white/10 shadow-2xl relative z-10"
                              onerror="this.style.display='none'; document.getElementById('preview-fallback').style.display='flex';">
                         
-                        <!-- ▼ 万が一画像が読み込めなかった際の予備表示（ロゴから人型アイコンへ変更） ▼ -->
+                        <!-- ▼ 万が一画像が読み込めなかった際の予備表示 ▼ -->
                         <div id="preview-fallback" class="hidden absolute inset-0 flex-col items-center justify-center bg-slate-800 text-brand-teal rounded-full border-4 border-white/10 shadow-inner z-10">
                             <i class="fa-solid fa-user-tie text-5xl sm:text-7xl opacity-50"></i>
                         </div>
@@ -652,7 +640,7 @@
             </div>
         </section>
 
-        <!-- FAQ Section (動的生成・アコーディオン形式・最下部へ移動) -->
+        <!-- FAQ Section -->
         <section id="faq" class="py-16 sm:py-24 bg-white border-t border-slate-100 relative">
             <div class="max-w-3xl mx-auto px-5 sm:px-8">
                 <div class="text-center mb-10 sm:mb-14">
@@ -664,7 +652,6 @@
                 </div>
 
                 <div id="faq-container" class="space-y-3 sm:space-y-4">
-                    <!-- Javascriptでここにデータが挿入され、アコーディオンが構築されます -->
                     <div class="text-center py-8 text-slate-400 text-sm flex flex-col items-center">
                         <i class="fa-solid fa-circle-notch fa-spin text-xl sm:text-2xl text-brand-teal/30 mb-3"></i>
                         <span class="font-medium tracking-widest uppercase text-[10px]">Loading FAQ...</span>
@@ -718,6 +705,37 @@
             </div>
         </div>
     </footer>
+
+    <!-- ▼ アフィリエイトバナー（右下固定） ▼ -->
+    <div class="fixed bottom-6 right-4 sm:bottom-8 sm:right-8 z-40 flex flex-col items-end animate-[fadeIn_1s_ease-out_1s_both]">
+        <!-- ふきだし風の装飾 -->
+        <div class="bg-brand-navy text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-t-lg rounded-bl-lg rounded-br-sm mb-1.5 relative shadow-md mr-3 hidden sm:block">
+            紙の名刺も作りたい方はこちら
+            <div class="absolute -bottom-1 right-2 w-2 h-2 bg-brand-navy transform rotate-45"></div>
+        </div>
+        
+        <!-- アフィリエイトリンクの実装 -->
+        <a href="https://px.a8.net/svt/ejp?a8mat=4AZL0E+3XP6R6+2DS2+BX3J6" rel="nofollow" target="_blank" class="bg-white/95 backdrop-blur-sm border border-slate-200 hover:border-brand-teal/50 rounded-2xl p-3 sm:p-4 flex items-center gap-3 sm:gap-4 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgba(45,212,191,0.2)] transition-all duration-300 group overflow-hidden relative w-auto">
+            
+            <!-- ホバー時のキラッと光るエフェクト -->
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-teal/0 via-brand-teal/5 to-brand-teal/0 -translate-x-full group-hover:translate-x-full duration-1000 transition-transform"></div>
+            
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-slate-50 group-hover:bg-teal-50 rounded-xl flex items-center justify-center flex-shrink-0 text-brand-navy group-hover:text-brand-teal transition-colors relative z-10 border border-slate-100">
+                <i class="fa-regular fa-address-card text-xl sm:text-2xl"></i>
+            </div>
+            <div class="flex-grow pr-2 sm:pr-4 relative z-10">
+                <p class="text-[9px] sm:text-[10px] text-brand-teal font-black tracking-widest uppercase mb-0.5">For Paper</p>
+                <p class="text-[13px] sm:text-sm font-bold text-brand-navy leading-tight">名刺通販ドットコム</p>
+                <p class="text-[10px] text-slate-500 mt-1 hidden sm:block font-medium line-clamp-1">170種類の豊富なテンプレート！</p>
+            </div>
+            <div class="text-slate-300 group-hover:text-brand-teal transition-colors relative z-10">
+                <i class="fa-solid fa-chevron-right text-xs sm:text-sm"></i>
+            </div>
+            
+            <!-- アフィリエイト計測用タグ（デザインに影響しないよう非表示設定で配置） -->
+            <img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4AZL0E+3XP6R6+2DS2+BX3J6" alt="" class="absolute opacity-0 pointer-events-none">
+        </a>
+    </div>
 
     <script>
         // Smooth scrolling
